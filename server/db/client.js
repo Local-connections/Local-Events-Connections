@@ -1,3 +1,4 @@
+import "dotenv/config";
 import pg from "pg";
-const client = new pg.Client(process.env.DATABASE_URL || "postgres://localhost/your_db_name_here");
+const client = new pg.Client(process.env.DATABASE_URL);
 export default client;
