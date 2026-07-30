@@ -21,14 +21,13 @@ CREATE TABLE events (
 id SERIAL PRIMARY KEY,
 title VARCHAR(150) NOT NULL,
 description TEXT NOT NULL,
-event_data DATE NOT NULL,
+event_date DATE NOT NULL,
 event_time TIME NOT NULL,
 location_id INTEGER NOT NULL REFERENCES locations(id) ON DELETE RESTRICT,
 image_url TEXT,
 organizer_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
 
 CREATE TABLE categories (
 id SERIAL PRIMARY KEY,
@@ -41,21 +40,22 @@ category_id INTEGER NOT NULL REFERENCES categories(id) ON DELETE CASCADE,
 PRIMARY KEY (event_id, category_id)
 );
 
-CREATE TABLE orders (
-  id SERIAL PRIMARY KEY,
-  user_id INTEGER NOT NULL REFERENCES events(id) ON DELETE CASCADE,
-  ticket_types_id INTEGER NOT NULL REFERENCES ticket_types(id) ON DELETE CASCADE,
-  quantity INTEGER NOT NULL CHECK(quantity > 0),
-  total_price DECIMAL(10,2) NOT NULL CHECK(total_price => 0),
-  orders_status TEXT NOT NULL DEFAULT 'confirmed',
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE ticket_types {
+CREATE TABLE ticket_types (
   id SERIAL PRIMARY KEY,
   event_id INTEGER NOT NULL REFERENCES events(id) on DELETE CASCADE,
   name TEXT NOT NULL,
   price DECIMAL(10,2) NOT NULL CHECK (price >= 0),
   quantity INTEGER CHECK (quantity >= 0),
-  UNIQUE(even_id, name)
-};
+  UNIQUE(event_id, name)
+);
+
+CREATE TABLE orders (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  ticket_types_id INTEGER NOT NULL REFERENCES ticket_types(id) ON DELETE CASCADE,
+  quantity INTEGER NOT NULL CHECK(quantity > 0),
+  total_price DECIMAL(10,2) NOT NULL CHECK(total_price >= 0),
+  order_status TEXT NOT NULL DEFAULT 'confirmed',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
