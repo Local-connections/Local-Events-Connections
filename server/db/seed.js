@@ -58,8 +58,6 @@ const seed = async () => {
     ],
   );
 
-  console.log(locationsResult.rows);
-
   //Each location's database ID 
 const annandaleLocationId = locationsResult.rows.find(
   (location) =>
@@ -93,66 +91,35 @@ console.log("Locations seeded successfully.");
     RETURNING id, name;
   `);
 
-  console.log(categoriesResult.rows);
-
   // category Ids
-  const businessCategoryId =
-  categoriesResult.rows.find(
-    (category) => category.name === "Business",
-  ).id;
-
-const culturalCategoryId =
-  categoriesResult.rows.find(
-    (category) => category.name === "Cultural or Traditional",
-  ).id;
-
-const communityCategoryId =
-  categoriesResult.rows.find(
-    (category) => category.name === "Community",
-  ).id;
-
-const celebrationCategoryId =
-  categoriesResult.rows.find(
-    (category) => category.name === "Celebration",
-  ).id;
-
-const salesCategoryId =
-  categoriesResult.rows.find(
-    (category) => category.name === "Sales",
-  ).id;
-
-const educationalCategoryId =
-  categoriesResult.rows.find(
-    (category) => category.name === "Educational",
-  ).id;
-
-const entertainmentCategoryId =
-  categoriesResult.rows.find(
-    (category) => category.name === "Entertainment",
-  ).id;
-
-const foodCategoryId =
-  categoriesResult.rows.find(
-    (category) => category.name === "Food & Drinks",
-  ).id;
-
-const localSportsCategoryId =
-  categoriesResult.rows.find(
-    (category) => category.name === "Local Sports",
-  ).id;
-
-  console.log("Categories seeded successfully.");
-
-  //Orders
-  await client.query(
-    `INSERT INTO orders (user_id, ticket_types_id, quantity, total_price, order_status)
-    VALUES
-    ($1, $2, $3, $4, $5);
-    `,
-    ["alexId", "businessTicketId", "2", "20.0", "confirmed"],
+  const categoryIds = Object.fromEntries(
+    categoriesResult.rows.map((category) => [
+      category.name,
+      category.id,
+    ]),
   );
 
-  console.log("Orders seeded successfully.");
+  const businessCategoryId = categoryIds["Business"];
+  const calturalCategoryId = categoryIds["Cultural or Traditional"];
+  const communityCategoryId = categoryIds["Community"];
+  const celebrationCategoryId = categoryIds["Celebration"];
+  const salesCategoryId = categoryIds["Sales"];
+  const educationalCategoryId = categoryIds["Educational"];
+  const entertaimentCategoryId = categoryIds["Entertaiment"];
+  const foodCategoryId = categoryIds["Food & Drinks"];
+  const localSportsCategoryId = categoryIds["Local Sports"];
+
+  console.log("Categories seeded successfully.");
+  //Orders
+  //await client.query(
+  //  `INSERT INTO orders (user_id, ticket_types_id, quantity, total_price, order_status)
+  //  VALUES
+  //  ($1, $2, $3, $4, $5);
+  //  `,
+  //  ["alexId", "businessTicketId", "2", "20.0", "confirmed"],
+  //);
+
+  //console.log("Orders seeded successfully.");
 
 
   console.log("Database tables and sample data created successfully.");
