@@ -160,43 +160,77 @@ const seed = async () => {
   console.log("Orders seeded successfully.");
 
   console.log("Database tables and sample data created successfully.");
-  console.log("add logic to create and seed tables");
-  for (let i = 0; i < 5; i++) {
-    const event = {
-      title: "Event title: " + i,
-      description: "Event description: " + i,
-      event_date: "2000-01-0" + i,
-      event_time: "00:00:0" + i,
-      location_id: i,
-      image_url: "Sample image: " + i,
-      organizer_id: i,
-    };
-    const event_category = {
-      event_id: i,
-      category_id: i,
-    };
-    const ticket_type = {
-      event_id: i,
-      name: "ticket type: " + i,
-      price: 10.0 + i,
-      quantity: i,
-    };
-    const eventQuery = `
-    INSERT INTO events (title, description, event_date, event_time, location_id, image_url, organizer_id)
-    VALUES ($1, $2, $3, $4, $5, $6, $7)
-    `;
-    const eventCategoryQuery = `
+
+  const eventsResult = await client.query(
+    `INSERT INTO events (title, description, event_date, event_time, location_id, image_url, organizer_id)
+    VALUES ($1, $2, $3, $4, $5, $6, $7), ($8, $9, $10, $11, $12, $13, $14)
+    RETURNING id, title;
+    `,
+    [
+      "Test title",
+      "Test description",
+      "2000-01-01",
+      "00:00:00",
+      1,
+      "Test image",
+      1,
+      "Test title #2",
+      "Test description #2",
+      "2000-01-02",
+      "00:00:02",
+      2,
+      "Test image #2",
+      2,
+    ],
+  );
+
+  const eventId = eventsResult.rows.find(
+    (event) => event.title === "Test title",
+  ).id;
+
+  const nextEventId = eventsResult.rows.find(
+    (event) => event.title === "Test title #2",
+  ).id;
+
+  console.log("Events seeded successfully.");
+
+  const eventCategoriesResult = await client.query(
+    `
     INSERT INTO event_categories(event_id, category_id)
-    VALUES ($1, $2)
-    `;
-    const ticketTypeQuery = `
+    VALUES ($1, $2), ($3, $4)
+    RETURNING id, event_id;
+    `,
+    [1, 1, 2, 2],
+  );
+
+  const firstEventId = eventCategoriesResult.rows.find(
+    (event_category) => event_category.event_id === 1,
+  ).id;
+
+  const secondEventId = eventCategoriesResult.rows.find(
+    (event_category) => event_category.event_id === 2,
+  ).id;
+
+  console.log("Event categories seeded successfully.");
+
+  const ticketTypesResult = await client.query(
+    `
     INSERT INTO ticket_types(event_id, name, price, quantity)
-    VALUES ($1, $2, $3, $4)
-    `;
-    await client.query(eventQuery, event);
-    await client.query(eventCategoryQuery, event_category);
-    await client.query(ticketTypeQuery, ticket_type);
-  }
+    VALUES ($1, $2, $3, $4), ($5, $6, $7, $8)
+    RETURNING id, name
+    `,
+    [1, "Ticket type 1", 50, 1, 2, "Ticket type 2", 100, 2],
+  );
+
+  const firstTicketId = ticketTypesResult.rows.find(
+    (ticket_type) => ticket_type.name === "Ticket type 1",
+  ).id;
+
+  const secondTicketId = ticketTypesResult.rows.find(
+    (ticket_type) => ticket_type.name === "Ticket type 2",
+  ).id;
+
+  console.log("Ticket types seeded successfully.");
 };
 
 export default seed;
