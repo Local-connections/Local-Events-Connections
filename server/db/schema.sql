@@ -1,4 +1,12 @@
-DROP TABLE IF EXISTS orders, ticket_types, event_categories, events, locations, users CASCADE;
+DROP TABLE IF EXISTS
+  orders,
+  ticket_types,
+  event_categories,
+  events,
+  categories,
+  locations,
+  users
+CASCADE;
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
@@ -59,4 +67,3 @@ CREATE TABLE orders (
   order_status TEXT NOT NULL DEFAULT 'confirmed',
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
