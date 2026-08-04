@@ -115,7 +115,7 @@ const annandaleLocationId = locationsResult.rows.find(
   );
 
   const businessCategoryId = categoryIds["Business"];
-  const calturalCategoryId = categoryIds["Cultural or Traditional"];
+  const culturalCategoryId = categoryIds["Cultural or Traditional"];
   const communityCategoryId = categoryIds["Community"];
   const celebrationCategoryId = categoryIds["Celebration"];
   const salesCategoryId = categoryIds["Sales"];
@@ -125,18 +125,7 @@ const annandaleLocationId = locationsResult.rows.find(
   const localSportsCategoryId = categoryIds["Local Sports"];
 
   console.log("Categories seeded successfully.");
-  //Orders
-  //await client.query(
-  //  `INSERT INTO orders (user_id, ticket_types_id, quantity, total_price, order_status)
-  //  VALUES
-  //  ($1, $2, $3, $4, $5);
-  //  `,
-  //  ["alexId", "businessTicketId", "2", "20.0", "confirmed"],
-  //);
-
-  //console.log("Orders seeded successfully.");
-
-  console.log("Database tables and sample data created successfully.");
+  
 
   const eventsResult = await client.query(
     `INSERT INTO events (title, description, event_date, event_time, location_id, image_url, organizer_id)
@@ -175,18 +164,18 @@ const annandaleLocationId = locationsResult.rows.find(
     `
     INSERT INTO event_categories(event_id, category_id)
     VALUES ($1, $2), ($3, $4)
-    RETURNING id, event_id;
+    RETURNING event_id, category_id;
     `,
-    [1, 1, 2, 2],
+    [eventId , businessCategoryId, nextEventId, culturalCategoryId,],
   );
 
-  const firstEventId = eventCategoriesResult.rows.find(
-    (event_category) => event_category.event_id === 1,
-  ).id;
+  //const firstEventId = eventCategoriesResult.rows.find(
+  //  (event_category) => event_category.event_id === eventId,
+  //).event_id;
 
-  const secondEventId = eventCategoriesResult.rows.find(
-    (event_category) => event_category.event_id === 2,
-  ).id;
+  //const secondEventId = eventCategoriesResult.rows.find(
+  //  (event_category) => event_category.event_id === nextEventId,
+  //).event_id;
 
   console.log("Event categories seeded successfully.");
 
@@ -208,6 +197,18 @@ const annandaleLocationId = locationsResult.rows.find(
   ).id;
 
   console.log("Ticket types seeded successfully.");
-};
 
+//Orders
+  await client.query(
+    `INSERT INTO orders (user_id, ticket_types_id, quantity, total_price, order_status)
+    VALUES
+    ($1, $2, $3, $4, $5);
+    `,
+    [alexId, firstTicketId, 2, 100, "confirmed",],
+  );
+
+  console.log("Orders seeded successfully.");
+
+  console.log("🌱 Database seeded successfully.");
+};
 export default seed;
