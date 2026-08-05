@@ -1,4 +1,4 @@
-import client from "../client";
+import client from "../client.js";
 import bcrypt from "bcrypt";
 
 export async function createUser(username, password) {

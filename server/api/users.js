@@ -2,9 +2,9 @@ import express from "express";
 const usersRouter = express.Router();
 export default usersRouter;
 
-import { createUser, getUser, getUserById } from "../db/queries/users";
-import { createToken } from "../utils/jwt";
-import requireBody from "../../middleware/requireBody";
+import { createUser, getUser, getUserById } from "../db/queries/users.js";
+import { createToken } from "../utils/jwt.js";
+import requireBody from "../middleware/requireBody.js";
 
 usersRouter.post(
   "/register",
