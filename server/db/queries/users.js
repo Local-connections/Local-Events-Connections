@@ -1,6 +1,5 @@
 import client from "../client";
 import bcrypt from "bcrypt";
-import requireBody from "../../middleware/requireBody";
 
 export async function createUser(username, password) {
   const createUserQuery = `

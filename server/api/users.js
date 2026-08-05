@@ -4,6 +4,7 @@ export default usersRouter;
 
 import { createUser, getUser, getUserById } from "../db/queries/users";
 import { createToken } from "../utils/jwt";
+import requireBody from "../../middleware/requireBody";
 
 usersRouter.post(
   "/register",
