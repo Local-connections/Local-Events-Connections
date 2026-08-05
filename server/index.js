@@ -1,11 +1,10 @@
 import path from "path";
+import app from "./app.js";
 import express from "express";
 import client from "./db/client.js";
 import seed from "./db/seed.js";
-import router from "./api/index.js";
-const app = express();
+//import router from "./api/index.js";
 //body parsing middleware
-app.use(express.json());
 
 //for deployment only
 const __dirname = import.meta.dirname;
@@ -14,7 +13,7 @@ app.get("/", (req, res) => res.sendFile(path.join(__dirname, "../client/dist/ind
 app.use("/assets", express.static(path.join(__dirname, "../client/dist/assets")));
 
 //use api routes
-app.use("/api", router);
+//app.use("/api", router);
 
 //express routes catch all
 app.use("/{*path}", (req, res, next) => {
