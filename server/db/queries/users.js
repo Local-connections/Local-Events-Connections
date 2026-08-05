@@ -1,29 +1,34 @@
 import client from "../client.js";
 import bcrypt from "bcrypt";
 
-export async function createUser(username, password) {
+export async function createUser(name, last_name, email, password) {
   const createUserQuery = `
-    INSERT INTO users(username, password)
-    VALUES ($1, $2)
+    INSERT INTO users(name, last_name, email, password)
+    VALUES ($1, $2, $3, $4)
     RETURNING *
     `;
   // Encrypting password when inserting into database
   const hashPassword = await bcrypt.hash(password, 15);
   const {
     rows: [user],
-  } = await client.query(createUserQuery, [username, hashPassword]);
+  } = await client.query(createUserQuery, [
+    name,
+    last_name,
+    email,
+    hashPassword,
+  ]);
   return user;
 }
 
-export async function getUser(username, password) {
+export async function getUser(email, password) {
   const getUserQuery = `
     SELECT * 
     FROM users
-    WHERE username = $1
+    WHERE email = $1
     `;
   const {
     rows: [user],
-  } = await client.query(getUserQuery, [username]);
+  } = await client.query(getUserQuery, [email]);
   // Credentials checking
   if (!user) {
     return null;
