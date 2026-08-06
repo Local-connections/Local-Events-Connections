@@ -1,8 +1,18 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import Home from "./pages/Home";
+import Register from "./pages/Register";
+
 function App() {
   return (
-    <div>
-      <h1>Start of your template!</h1>
-    </div>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
