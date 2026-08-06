@@ -1,17 +1,4 @@
 import express from "express";
-<<<<<<< HEAD
-import { getTicketTypes } from "../db/queries/ticketTypes.js";
-
-const router = express.Router();
-
-router.get("/:eventId/ticket-types", async (req, res, next) => {
-  try {
-    const event = getTicketTypes(req.params.eventId);
-    if (!event) {
-      return res.status(404).send("Event not found.");
-    }
-    res.send(event);
-=======
 import {
   getEvents,
   getEventById,
@@ -31,7 +18,6 @@ router.get("/", async (req, res, next) => {
     const events = await getEvents();
 
     res.status(200).json(events);
->>>>>>> main
   } catch (error) {
     next(error);
   }
