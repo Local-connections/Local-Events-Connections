@@ -6,6 +6,8 @@ import {
   createEvent,
   addEventCategory,
   createTicketType,
+  updateEvent,
+  deleteEvent,
 } from "../db/queries/events.js";
 
 import getUserFromToken from "../middleware/getUserFromToken.js";
@@ -13,6 +15,7 @@ import requireBody from "../middleware/requireBody.js";
 
 const router = express.Router();
 
+// GET /events
 router.get("/", async (req, res, next) => {
   try {
     const events = await getEvents();
@@ -23,6 +26,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+// POST /events
 router.post(
   "/",
   getUserFromToken,
@@ -53,6 +57,7 @@ router.post(
         category_ids,
         ticket_types,
       } = req.body;
+
       const event = await createEvent(
         title,
         description,
@@ -94,6 +99,7 @@ router.post(
   },
 );
 
+// GET /events/:eventId/ticket-types
 router.get("/:eventId/ticket-types", async (req, res, next) => {
   try {
     const eventId = Number(req.params.eventId);
@@ -120,6 +126,104 @@ router.get("/:eventId/ticket-types", async (req, res, next) => {
   }
 });
 
+// PUT /events/:id
+router.put("/:id", getUserFromToken, async (req, res, next) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({
+        error: "You must be logged in.",
+      });
+    }
+
+    const id = Number(req.params.id);
+
+    if (!Number.isInteger(id) || id < 1) {
+      return res.status(400).json({
+        error: "Event id must be a positive number.",
+      });
+    }
+
+    const event = await getEventById(id);
+
+    if (!event) {
+      return res.status(404).json({
+        error: "Event not found.",
+      });
+    }
+
+    if (event.organizer_id !== req.user.id) {
+      return res.status(403).json({
+        error: "You are not allowed to update this event.",
+      });
+    }
+
+    const {
+      title,
+      description,
+      event_date,
+      event_time,
+      location_id,
+      image_url,
+      is_free,
+    } = req.body;
+
+    const updatedEvent = await updateEvent(
+      id,
+      title ?? event.title,
+      description ?? event.description,
+      event_date ?? event.event_date,
+      event_time ?? event.event_time,
+      location_id ?? event.location_id,
+      image_url !== undefined ? image_url : event.image_url,
+      is_free ?? event.is_free,
+    );
+
+    res.status(200).json(updatedEvent);
+  } catch (error) {
+    next(error);
+  }
+});
+
+//
+router.delete("/:id", getUserFromToken, async (req, res, next) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({
+        error: "You must be logged in.",
+      });
+    }
+
+    const id = Number(req.params.id);
+
+    if (!Number.isInteger(id) || id < 1) {
+      return res.status(400).json({
+        error: "Event id must be a positive number.",
+      });
+    }
+
+    const event = await getEventById(id);
+
+    if (!event) {
+      return res.status(404).json({
+        error: "Event not found.",
+      });
+    }
+
+    if (event.organizer_id !== req.user.id) {
+      return res.status(403).json({
+        error: "You are not allowed to delete this event.",
+      });
+    }
+
+    await deleteEvent(id);
+
+    res.sendStatus(204);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// GET /events/:id
 router.get("/:id", async (req, res, next) => {
   try {
     const id = Number(req.params.id);
