@@ -7,6 +7,7 @@ import morgan from "morgan";
 //TODO api routes imports here Ex. import usersRouter from "#api/users"
 import locationsRouter from "./api/locations.js";
 import usersRouter from "./api/users.js";
+import eventsRouter from ".api/events.js";
 import categoriesRouter from "./api/categories.js";
 import getUserFromToken from "./middleware/getUserFromToken.js";
 
@@ -19,6 +20,7 @@ app.use(morgan("dev"));
 app.use("/locations", locationsRouter);
 app.use("/users", usersRouter);
 app.use("/categories", categoriesRouter);
+app.use("/events", eventsRouter);
 
 app.use((err, req, res, next) => {
   switch (err.code) {
