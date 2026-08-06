@@ -7,6 +7,7 @@ import morgan from "morgan";
 //TODO api routes imports here Ex. import usersRouter from "#api/users"
 import locationsRouter from "./api/locations.js";
 import usersRouter from "./api/users.js";
+import categoriesRouter from "./api/categories.js";
 import getUserFromToken from "./middleware/getUserFromToken.js";
 
 app.use(express.json());
@@ -17,6 +18,7 @@ app.use(morgan("dev"));
 //TODO: routers goes here Ex.  app.use("/users", usersRouter);
 app.use("/locations", locationsRouter);
 app.use("/users", usersRouter);
+app.use("/categories", categoriesRouter);
 
 app.use((err, req, res, next) => {
   switch (err.code) {
