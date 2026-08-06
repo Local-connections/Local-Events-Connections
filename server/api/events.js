@@ -22,8 +22,6 @@ router.get("/", async (req, res, next) => {
     next(error);
   }
 });
-<<<<<<< HEAD
-=======
 
 router.post(
   "/",
@@ -56,40 +54,40 @@ router.post(
         ticket_types,
       } = req.body;
       const event = await createEvent(
-      title,
-      description,
-      event_date,
-      event_time,
-      location_id,
-      image_url ?? null,
-      req.user.id,
-      is_free,
-    );
+        title,
+        description,
+        event_date,
+        event_time,
+        location_id,
+        image_url ?? null,
+        req.user.id,
+        is_free,
+      );
 
-    if (Array.isArray(category_ids)) {
-      for (const categoryId of category_ids) {
-        await addEventCategory(event.id, categoryId);
+      if (Array.isArray(category_ids)) {
+        for (const categoryId of category_ids) {
+          await addEventCategory(event.id, categoryId);
+        }
       }
-    }
 
-    if (Array.isArray(ticket_types)) {
-      for (const ticketType of ticket_types) {
-        await createTicketType(
-          event.id,
-          ticketType.name,
-          ticketType.price,
-          ticketType.quantity ?? null,
-        );
+      if (Array.isArray(ticket_types)) {
+        for (const ticketType of ticket_types) {
+          await createTicketType(
+            event.id,
+            ticketType.name,
+            ticketType.price,
+            ticketType.quantity ?? null,
+          );
+        }
       }
-    }
 
-    const createdEvent = {
-      ...event,
-      categories: category_ids ?? [],
-      ticket_types: ticket_types ?? [],
-    };
+      const createdEvent = {
+        ...event,
+        categories: category_ids ?? [],
+        ticket_types: ticket_types ?? [],
+      };
 
-    res.status(201).json(createdEvent);
+      res.status(201).json(createdEvent);
     } catch (error) {
       next(error);
     }
@@ -147,4 +145,3 @@ router.get("/:id", async (req, res, next) => {
 });
 
 export default router;
->>>>>>> main
