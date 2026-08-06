@@ -99,7 +99,7 @@ const annandaleLocationId = locationsResult.rows.find(
       ('Celebration'),
       ('Sales'), 
       ('Educational'), 
-      ('Entertaiment'), 
+      ('Entertainment'), 
       ('Food & Drinks'), 
       ('Local Sports')
     RETURNING id, name;
@@ -128,8 +128,10 @@ const annandaleLocationId = locationsResult.rows.find(
   
 
   const eventsResult = await client.query(
-    `INSERT INTO events (title, description, event_date, event_time, location_id, image_url, organizer_id)
-    VALUES ($1, $2, $3, $4, $5, $6, $7), ($8, $9, $10, $11, $12, $13, $14)
+    `INSERT INTO events (title, description, event_date, event_time, location_id, image_url, organizer_id, is_free)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8),
+     ($9, $10, $11, $12, $13, $14, $15, $16),
+     ($17, $18, $19, $20, $21, $22, $23, $24)
     RETURNING id, title;
     `,
     [
@@ -140,6 +142,7 @@ const annandaleLocationId = locationsResult.rows.find(
       1,
       "Test image",
       1,
+      false,
       "Test title #2",
       "Test description #2",
       "2000-01-02",
@@ -147,6 +150,15 @@ const annandaleLocationId = locationsResult.rows.find(
       2,
       "Test image #2",
       2,
+      false,
+      "Free Yoga in the Park",
+       "A relaxing outdoor yoga session",
+    "2025-06-15",
+     "08:00:00",
+    3,
+     null,
+    1,
+     true
     ],
   );
 
