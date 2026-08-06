@@ -112,3 +112,55 @@ export async function createTicketType(
 
   return result.rows[0];
 }
+
+export async function updateEvent(
+  id,
+  title,
+  description,
+  eventDate,
+  eventTime,
+  locationId,
+  imageUrl,
+  isFree,
+) {
+  const result = await client.query(
+    `
+      UPDATE events
+      SET
+        title = $1,
+        description = $2,
+        event_date = $3,
+        event_time = $4,
+        location_id = $5,
+        image_url = $6,
+        is_free = $7
+      WHERE id = $8
+      RETURNING *;
+    `,
+    [
+      title,
+      description,
+      eventDate,
+      eventTime,
+      locationId,
+      imageUrl,
+      isFree,
+      id,
+    ],
+  );
+
+  return result.rows[0];
+}
+
+export async function deleteEvent(id) {
+  const result = await client.query(
+    `
+      DELETE FROM events
+      WHERE id = $1
+      RETURNING *;
+    `,
+    [id],
+  );
+
+  return result.rows[0];
+}
