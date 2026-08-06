@@ -1,5 +1,7 @@
 import express from "express";
+import cors from "cors";  
 const app = express();
+app.use(cors());
 export default app;
 
 import morgan from "morgan";
@@ -8,6 +10,7 @@ import morgan from "morgan";
 import locationsRouter from "./api/locations.js";
 import usersRouter from "./api/users.js";
 import eventsRouter from "./api/events.js";
+import categoriesRouter from "./api/categories.js";
 import getUserFromToken from "./middleware/getUserFromToken.js";
 
 app.use(express.json());
@@ -18,6 +21,7 @@ app.use(morgan("dev"));
 //TODO: routers goes here Ex.  app.use("/users", usersRouter);
 app.use("/locations", locationsRouter);
 app.use("/users", usersRouter);
+app.use("/categories", categoriesRouter);
 app.use("/events", eventsRouter);
 
 app.use((err, req, res, next) => {
