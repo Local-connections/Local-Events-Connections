@@ -12,13 +12,22 @@ export function AuthProvider({ children }) {
     setUser({ token });
   }
 
+   const value = {
+    register,
+    user,
+  };
+
   return (
-    <AuthContext.Provider value={{ user, register }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );
 }
 
 export function useAuth() {
-  return useContext(AuthContext);
+const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
 }
