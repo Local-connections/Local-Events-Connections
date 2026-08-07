@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { registerUser } from "../api/auth";
+import { loginUser, registerUser } from "../api/auth";
 
 const AuthContext = createContext();
 
@@ -12,20 +12,27 @@ export function AuthProvider({ children }) {
     setUser({ token });
   }
 
-   const value = {
+  const value = {
     register,
     user,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  async function login(userData) {
+    const token = await loginUser(userData);
+    localStorage.setItem("token", token);
+    setUser({ token });
+  }
+
+  const value = {
+    login,
+    user,
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {
-const context = useContext(AuthContext);
+  const context = useContext(AuthContext);
   if (!context) {
     throw new Error("useAuth must be used within an AuthProvider");
   }
