@@ -20,7 +20,7 @@ export default function EventCard({ event }) {
       <h3>{event.title}</h3>
       <p>{event.description}</p>
       <p>Date: {formattedDate}</p>
-      <p>Location: {event.location_name}</p>
+      <p>Location: {event.location_name}, {event.city}</p>
       <p>Time: {formattedTime}</p>
       {event.is_free ? <p>Free Event</p> : <p>Paid Event</p>}
     </div>
