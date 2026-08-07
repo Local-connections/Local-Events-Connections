@@ -2,9 +2,14 @@ import client from "../client.js";
 
 export async function getEvents() {
   const result = await client.query(`
-    SELECT *
+    SELECT 
+      events.*,
+      locations.name AS location_name,
+      locations.city,
+      locations.state
     FROM events
-    ORDER BY event_date, event_time;
+    JOIN locations ON events.location_id = locations.id
+    ORDER BY events.event_date, events.event_time;
   `);
 
   return result.rows;
