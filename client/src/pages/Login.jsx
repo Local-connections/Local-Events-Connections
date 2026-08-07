@@ -23,7 +23,7 @@ const Login = () => {
 
   return (
     <div className="form-section">
-      <h3>Register for an account</h3>
+      <h3>Login to your account</h3>
       <form onSubmit={handleSubmit}>
         <label>
           Email:

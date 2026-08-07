@@ -12,7 +12,7 @@ const seed = async () => {
 
   //Users
   //Sample Password
-  const hashedPassword = await bcrypt.hash("passsword123", 10);
+  const hashedPassword = await bcrypt.hash("password123", 10);
   //Add Simple Users
   const usersResult = await client.query(
     `INSERT INTO users (name, last_name, email, password)
@@ -73,11 +73,10 @@ const seed = async () => {
     ],
   );
 
-  //Each location's database ID 
-const annandaleLocationId = locationsResult.rows.find(
-  (location) =>
-    location.name === "Annandale Community Center",
-).id;
+  //Each location's database ID
+  const annandaleLocationId = locationsResult.rows.find(
+    (location) => location.name === "Annandale Community Center",
+  ).id;
 
   const fairfaxLocationId = locationsResult.rows.find(
     (location) => location.name === "Fairfax Regional Library",
@@ -108,10 +107,7 @@ const annandaleLocationId = locationsResult.rows.find(
 
   // category Ids
   const categoryIds = Object.fromEntries(
-    categoriesResult.rows.map((category) => [
-      category.name,
-      category.id,
-    ]),
+    categoriesResult.rows.map((category) => [category.name, category.id]),
   );
 
   const businessCategoryId = categoryIds["Business"];
@@ -125,7 +121,6 @@ const annandaleLocationId = locationsResult.rows.find(
   const localSportsCategoryId = categoryIds["Local Sports"];
 
   console.log("Categories seeded successfully.");
-  
 
   const eventsResult = await client.query(
     `INSERT INTO events (title, description, event_date, event_time, location_id, image_url, organizer_id, is_free)
@@ -152,13 +147,13 @@ const annandaleLocationId = locationsResult.rows.find(
       2,
       false,
       "Free Yoga in the Park",
-       "A relaxing outdoor yoga session",
-    "2025-06-15",
-     "08:00:00",
-    3,
-     null,
-    1,
-     true
+      "A relaxing outdoor yoga session",
+      "2025-06-15",
+      "08:00:00",
+      3,
+      null,
+      1,
+      true,
     ],
   );
 
@@ -178,7 +173,7 @@ const annandaleLocationId = locationsResult.rows.find(
     VALUES ($1, $2), ($3, $4)
     RETURNING event_id, category_id;
     `,
-    [eventId , businessCategoryId, nextEventId, culturalCategoryId,],
+    [eventId, businessCategoryId, nextEventId, culturalCategoryId],
   );
 
   //const firstEventId = eventCategoriesResult.rows.find(
@@ -210,13 +205,13 @@ const annandaleLocationId = locationsResult.rows.find(
 
   console.log("Ticket types seeded successfully.");
 
-//Orders
+  //Orders
   await client.query(
     `INSERT INTO orders (user_id, ticket_types_id, quantity, total_price, order_status)
     VALUES
     ($1, $2, $3, $4, $5);
     `,
-    [alexId, firstTicketId, 2, 100, "confirmed",],
+    [alexId, firstTicketId, 2, 100, "confirmed"],
   );
 
   console.log("Orders seeded successfully.");
