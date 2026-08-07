@@ -12,11 +12,6 @@ export function AuthProvider({ children }) {
     setUser({ token });
   }
 
-  const value = {
-    register,
-    user,
-  };
-
   async function login(userData) {
     const token = await loginUser(userData);
     localStorage.setItem("token", token);
@@ -25,6 +20,7 @@ export function AuthProvider({ children }) {
 
   const value = {
     login,
+    register,
     user,
   };
 
