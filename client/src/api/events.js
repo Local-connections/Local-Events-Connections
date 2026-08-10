@@ -16,3 +16,8 @@ export async function createEvent(eventData, token) {
   return data;
 }
 
+export const getEvents = async () => {
+  const {data} = await axios.get(`${API}/events`);
+  return data;
+};
+
