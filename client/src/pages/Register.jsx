@@ -1,5 +1,5 @@
 import { useAuth } from "../context/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router";
 
 const Register = () => {
   const { register } = useAuth();
@@ -17,7 +17,7 @@ const Register = () => {
 
     try {
       await register(userData);
-      navigate("/");  
+      navigate("/");
     } catch (error) {
       console.error("Registration failed:", error);
     }
