@@ -18,9 +18,12 @@ export function AuthProvider({ children }) {
     setUser({ token });
   }
 
+  const logout = () => setUser(null);
+
   const value = {
     login,
     register,
+    logout,
     user,
   };
 

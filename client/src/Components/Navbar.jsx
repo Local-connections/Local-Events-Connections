@@ -1,0 +1,36 @@
+import { NavLink } from "react-router";
+import { useAuth } from "../context/AuthContext";
+
+export default function Navbar() {
+  const { user, logout } = useAuth();
+  return (
+    <header id="navbar">
+      <img className="navbarImage" src="../events.jpg" />
+      <p>Events</p>
+      <nav id="navlinks">
+        <NavLink className="links" to="/">
+          Home
+        </NavLink>
+        {user ? (
+          <>
+            <a id="logout" href="#" onClick={() => logout()}>
+              Log out
+            </a>
+            <NavLink className="links" to="/account">
+              Profile
+            </NavLink>
+          </>
+        ) : (
+          <>
+            <NavLink className="links" to="/register">
+              Register
+            </NavLink>
+            <NavLink className="links" to="/login">
+              Login
+            </NavLink>
+          </>
+        )}
+      </nav>
+    </header>
+  );
+}
