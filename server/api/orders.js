@@ -1,5 +1,5 @@
 import express from "express";
-import { purchaseTicket } from "../db/queries/orders.js";
+import { purchaseTicket, getOrdersByUser, getOrderById } from "../db/queries/orders.js";
 import getUserFromToken from "../middleware/getUserFromToken.js";
 import requireBody from "../middleware/requireBody.js";
 
@@ -43,3 +43,55 @@ router.post("/", requireBody(["ticket_type_id", "quantity"]), async (req, res, n
     }
   }
 );
+
+router.get("/", async (req, res, next) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({
+        error: "You must be logged in.",
+      });
+    }
+
+    const orders = await getOrdersByUser(req.user.id);
+
+    res.status(200).json(orders);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/:id", async (req, res, next) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({
+        error: "You must be logged in.",
+      });
+    }
+
+    const orderId = Number(req.params.id);
+
+    if (!Number.isInteger(orderId) || orderId < 1) {
+      return res.status(400).json({
+        error: "Order id must be a positive number.",
+      });
+    }
+
+    const order = await getOrderById(orderId);
+
+    if (!order) {
+      return res.status(404).json({
+        error: "Order not found.",
+      });
+    }
+
+    if (order.user_id !== req.user.id) {
+      return res.status(403).json({
+        error: "You are not authorized to view this order.",
+      });
+    }
+
+    res.status(200).json(order);
+  } catch (error) {
+    next(error);
+  }
+});

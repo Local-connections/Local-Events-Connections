@@ -36,3 +36,45 @@ export async function purchaseTicket(userId, ticketTypeId, quantity) {
       );
     return order;
 }
+
+export async function getOrdersByUser(userId){
+  const sql = `
+    SELECT
+    orders.id,
+    orders.quantity,
+    orders.total_price,
+    orders.order_status,
+    orders.created_at,
+    ticket_types.name AS ticket_type_name,
+    events.title AS event_title
+    FROM orders
+    JOIN ticket_types ON orders.ticket_types_id = ticket_types.id
+    JOIN events ON ticket_types.event_id = events.id
+    WHERE orders.user_id = $1;
+      `;
+  const { rows } = await client.query(sql, [userId]);
+  return rows;
+}
+
+export async function getOrderById(orderId){
+  const sql = `
+    SELECT
+      orders.*,
+      ticket_types.name AS ticket_type_name,
+      events.title AS event_title,
+      events.event_date,
+      events.event_time,
+      locations.name AS location_name,
+      locations.address,
+      locations.city,
+      locations.state,
+      locations.zip
+    FROM orders
+    JOIN ticket_types ON orders.ticket_types_id = ticket_types.id
+    JOIN events ON ticket_types.event_id = events.id
+    JOIN locations ON events.location_id = locations.id
+    WHERE orders.id = $1;
+      `;
+  const { rows: [order]} = await client.query(sql, [orderId]);
+  return order;
+  }
