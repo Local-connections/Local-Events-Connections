@@ -5,7 +5,10 @@ export default function Navbar() {
   const { user, logout } = useAuth();
   return (
     <header id="navbar">
-      <img className="navbarImage" src="../events.jpg" />
+      <img
+        className="navbarImage"
+        src="https://cdn-icons-png.flaticon.com/512/871/871976.png"
+      />
       <p>Events</p>
       <nav id="navlinks">
         <NavLink className="links" to="/">
