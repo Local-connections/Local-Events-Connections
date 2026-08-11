@@ -4,7 +4,15 @@ import { loginUser, registerUser } from "../api/auth";
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      return { token };
+    }
+
+    return null;
+  });
 
   async function register(userData) {
     const token = await registerUser(userData);
@@ -18,7 +26,10 @@ export function AuthProvider({ children }) {
     setUser({ token });
   }
 
-  const logout = () => setUser(null);
+  const logout = () => {
+    localStorage.removeItem("token");
+    setUser(null);
+  };
 
   const value = {
     login,
