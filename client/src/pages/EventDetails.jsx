@@ -23,7 +23,7 @@ export default function Event() {
   }
 
   return (
-    <div id="event">
+    <div className="event">
       <figure>
         <img className="eventImage" src={event.image_url} />
       </figure>

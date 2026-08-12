@@ -71,3 +71,9 @@ img {
   display: flex;
   gap: 1ch;
 }
+
+.event {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
