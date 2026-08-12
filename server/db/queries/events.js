@@ -57,7 +57,7 @@ export async function createEvent(
   locationId,
   imageUrl,
   organizerId,
-  isFree
+  isFree,
 ) {
   const result = await client.query(
     `
@@ -83,7 +83,7 @@ export async function createEvent(
       imageUrl,
       organizerId,
       isFree,
-    ]
+    ],
   );
 
   return result.rows[0];
@@ -98,16 +98,11 @@ export async function addEventCategory(eventId, categoryId) {
       )
       VALUES ($1, $2);
     `,
-    [eventId, categoryId]
+    [eventId, categoryId],
   );
 }
 
-export async function createTicketType(
-  eventId,
-  name,
-  price,
-  quantity,
-) {
+export async function createTicketType(eventId, name, price, quantity) {
   const result = await client.query(
     `
       INSERT INTO ticket_types (

@@ -3,21 +3,17 @@ import axios from "axios";
 const API = import.meta.env.VITE_API_URL;
 
 export async function createEvent(eventData, token) {
-  const { data } = await axios.post(
-    `${API}/events`,
-    eventData,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+  const { data } = await axios.post(`${API}/events`, eventData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
-  );
+  });
 
   return data;
 }
 
 export const getEvents = async () => {
-  const {data} = await axios.get(`${API}/events`);
+  const { data } = await axios.get(`${API}/events`);
   return data;
 };
 
@@ -27,15 +23,11 @@ export async function getEventById(id) {
 }
 
 export async function updateEvent(id, eventData, token) {
-  const { data } = await axios.put(
-    `${API}/events/${id}`,
-    eventData,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+  const { data } = await axios.put(`${API}/events/${id}`, eventData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
-  );
+  });
 
   return data;
 }

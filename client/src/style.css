@@ -72,6 +72,10 @@ img {
   gap: 1ch;
 }
 
+.event {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 /* Orders page */
 .orders-page {
   max-width: 800px;
