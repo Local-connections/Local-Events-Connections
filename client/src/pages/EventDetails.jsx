@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
-import { getEvent } from "../api/events";
+import { getEventById } from "../api/events";
 import { useAuth } from "../context/AuthContext";
 
 export default function Event() {
@@ -12,7 +12,7 @@ export default function Event() {
 
   useEffect(() => {
     const syncEvent = async () => {
-      const data = await getEvent(id);
+      const data = await getEventById(id);
       setEvent(data);
     };
     syncEvent();
