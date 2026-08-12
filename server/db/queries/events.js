@@ -18,9 +18,16 @@ export async function getEvents() {
 export async function getEventById(id) {
   const result = await client.query(
     `
-      SELECT *
+      SELECT
+        events.*,
+        locations.name AS location_name,
+        locations.address,
+        locations.city,
+        locations.state,
+        locations.zip
       FROM events
-      WHERE id = $1;
+      JOIN locations ON events.location_id = locations.id
+      WHERE events.id = $1;
     `,
     [id],
   );

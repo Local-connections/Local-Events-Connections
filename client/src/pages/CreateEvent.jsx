@@ -1,15 +1,29 @@
+import { useNavigate } from "react-router";
 import { useAuth } from "../context/AuthContext";
 import { createEvent } from "../api/events";
+import { createLocation } from "../api/locations";
 import EventForm from "../Components/EventForm";
-import { useNavigate } from "react-router";
 
 export default function CreateEvent() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  async function handleCreateEvent(eventData) {
+  async function handleCreateEvent(eventData, locationData) {
     try {
-      const newEvent = await createEvent(eventData, user.token);
+      const location = await createLocation(
+        locationData,
+        user.token,
+      );
+
+      const newEventData = {
+        ...eventData,
+        location_id: location.id,
+      };
+
+      const newEvent = await createEvent(
+        newEventData,
+        user.token,
+      );
 
       console.log("Event created:", newEvent);
 
@@ -22,6 +36,7 @@ export default function CreateEvent() {
   return (
     <div>
       <h2>Create Event</h2>
+
       <EventForm onSubmit={handleCreateEvent} />
     </div>
   );

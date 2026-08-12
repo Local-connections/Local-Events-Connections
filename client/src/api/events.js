@@ -21,3 +21,21 @@ export const getEvents = async () => {
   return data;
 };
 
+export async function getEventById(id) {
+  const { data } = await axios.get(`${API}/events/${id}`);
+  return data;
+}
+
+export async function updateEvent(id, eventData, token) {
+  const { data } = await axios.put(
+    `${API}/events/${id}`,
+    eventData,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+
+  return data;
+}
