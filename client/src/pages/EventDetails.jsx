@@ -22,6 +22,19 @@ export default function Event() {
     return <p>Loading...</p>;
   }
 
+  const formattedTime = new Date(
+    `1970-01-01T${event.event_time}`,
+  ).toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+  });
+
+  const formattedDate = new Date(event.event_date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
   return (
     <div className="event">
       <figure>
@@ -30,9 +43,13 @@ export default function Event() {
       <section>
         <h1>{event.title}</h1>
         <p>
-          Hosted at {event.location_name}, {event.city}
+          Hosted in {event.location_name}, {event.city}
+        </p>
+        <p>
+          Hosted at {formattedTime} on {formattedDate}
         </p>
         <p>{event.description}</p>
+        {event.is_free ? <p>Free Event</p> : <p>Paid Event</p>}
       </section>
     </div>
   );
