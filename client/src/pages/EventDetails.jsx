@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router";
+import { Link, useParams, useNavigate } from "react-router";
 import { getEventById, getTicketTypes, deleteEvent } from "../api/events";
 import { useAuth } from "../context/AuthContext";
 import PurchaseForm from "../Components/PurchaseForm";
@@ -78,9 +78,15 @@ export default function EventDetails() {
         {event.is_free ? <p>Free Event</p> : <p>Paid Event</p>}
 
         {user && (
-          <button onClick={handleDelete}>
-            Delete Event
-          </button>
+          <>
+            <Link to={`/events/${id}/edit`}>
+              <button>Edit Event</button>
+            </Link>
+
+            <button onClick={handleDelete}>
+              Delete Event
+            </button>
+          </>
         )}
       </section>
       <PurchaseForm ticketTypes={ticketTypes} />
