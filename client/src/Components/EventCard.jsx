@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import defaultImage from "../assets/defaultEventImage.png";
 
 export default function EventCard({ event }) {
@@ -17,7 +18,9 @@ export default function EventCard({ event }) {
   return (
     <div className="event-card">
       <img src={imageSrc} alt={event.title} />
+      <Link to={`/events/${event.id}`}>
       <h3>{event.title}</h3>
+      </Link>
       <p>{event.description}</p>
       <p>Date: {formattedDate}</p>
       <p>Location: {event.location_name}, {event.city}</p>
