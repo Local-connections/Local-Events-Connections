@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { createOrder } from "../api/orders";
+import { Link } from "react-router"; 
 
 export default function TicketCard({ ticket }) {
   const { user } = useAuth();
+  const isLoggedIn = !!user;
+  
 
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -12,7 +15,7 @@ export default function TicketCard({ ticket }) {
   const maxAvailable = ticket.quantity ?? 99;
 
   const handleBuy = async () => {
-    if (!user) {
+    if (!isLoggedIn) {
       setMessage({ type: "error", text: "You must be logged in to buy tickets." });
       return;
     }
@@ -47,7 +50,7 @@ export default function TicketCard({ ticket }) {
         <button
           type="button"
           onClick={() => setQuantity(Math.max(1, quantity - 1))}
-          disabled={loading}
+          disabled={!isLoggedIn || loading}
         >
           -
         </button>
@@ -55,7 +58,7 @@ export default function TicketCard({ ticket }) {
         <button
           type="button"
           onClick={() => setQuantity(Math.min(maxAvailable, quantity + 1))}
-          disabled={loading}
+          disabled={!isLoggedIn || loading}
         >
           +
         </button>
@@ -64,10 +67,18 @@ export default function TicketCard({ ticket }) {
       <button
         className="buy-btn"
         onClick={handleBuy}
-        disabled={loading || (ticket.quantity !== null && ticket.quantity === 0)}
+        disabled={!isLoggedIn || loading || (ticket.quantity !== null && ticket.quantity === 0)}
       >
-        {loading ? "Processing…" : ticket.quantity === 0 ? "Sold Out" : "Buy"}
+        {!isLoggedIn ? "Log in to buy" :
+          loading ? "Processing…" :
+          ticket.quantity === 0 ? "Sold Out" : "Buy"}
       </button>
+
+        {!isLoggedIn && (
+        <p className="message error">
+          Please <Link to="/login">log in</Link> to purchase tickets.
+        </p>
+      )}
 
       {message.text && (
         <p className={`message ${message.type}`}>{message.text}</p>
