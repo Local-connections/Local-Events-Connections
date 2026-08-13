@@ -8,6 +8,7 @@ import { Route, Routes } from "react-router";
 import CreateEvent from "./pages/CreateEvent";
 import Event from "./pages/EventDetails";
 import Events from "./pages/Events";
+import EventDetails from "./pages/EventDetails";
 import EditEvent from "./pages/EditEvent";
 import MyOrders from "./pages/MyTickets";
 
@@ -21,6 +22,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/events/create" element={<CreateEvent />} />
         <Route path="/events" element={<Events />} />
+        <Route path="/events/:id" element={<EventDetails />} />
         <Route path="/events/:id/edit" element={<EditEvent />} />
         <Route path="/orders" element={<MyOrders />} />
       </Route>
