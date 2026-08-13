@@ -16,12 +16,15 @@ export default function Navbar() {
         </NavLink>
         {user ? (
           <>
-            <a id="logout" href="#" onClick={() => logout()}>
-              Log out
-            </a>
+            <NavLink className="links" to="/orders">
+              My Tickets
+            </NavLink>
             <NavLink className="links" to="/account">
               Profile
             </NavLink>
+            <a id="logout" href="#" onClick={() => logout()}>
+              Log out
+            </a>
           </>
         ) : (
           <>

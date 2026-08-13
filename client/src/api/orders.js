@@ -11,3 +11,11 @@ export async function createOrder(ticketTypeId, quantity) {
   );
   return data;
 }
+
+export async function getMyOrders() {
+  const token = localStorage.getItem("token");
+  const { data } = await axios.get(`${API}/orders`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return data;
+}
