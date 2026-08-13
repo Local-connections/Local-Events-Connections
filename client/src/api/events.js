@@ -36,3 +36,11 @@ export async function getTicketTypes(eventId) {
   const { data } = await axios.get(`${API}/events/${eventId}/ticket-types`);
   return data;
 }
+
+export async function deleteEvent(id, token) {
+  await axios.delete(`${API}/events/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}

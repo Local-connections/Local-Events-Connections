@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
-import { getEventById, getTicketTypes } from "../api/events";
+import { useParams, useNavigate } from "react-router";
+import { getEventById, getTicketTypes, deleteEvent } from "../api/events";
+import { useAuth } from "../context/AuthContext";
 import PurchaseForm from "../Components/PurchaseForm";
 import defaultImage from "../assets/defaultEventImage.png";
 
 export default function EventDetails() {
-  //   const { token } = useAuth();
   const { id } = useParams();
+  const nav = useNavigate();
+  const { user } = useAuth();
   const [event, setEvent] = useState(null);
   const [ticketTypes, setTicketTypes] = useState([]);
   const [error, setError] = useState(null);
@@ -28,11 +30,19 @@ export default function EventDetails() {
     loadData();
   }, [id]);
 
-  if (error)
-    return <p className="error">{error}</p>;
-  if (!event) {
-    return <p>Loading...</p>;
+  async function handleDelete() {
+    try {
+      const token = localStorage.getItem("token");
+      await deleteEvent(id, token);
+      console.log("Event deleted");
+      nav("/");
+    } catch (error) {
+      console.error("Failed to delete event:", error);
+    }
   }
+
+  if (error) return <p className="error">{error}</p>;
+  if (!event) return <p>Loading...</p>;
 
   const formattedTime = new Date(
     `1970-01-01T${event.event_time}`,
@@ -66,6 +76,12 @@ export default function EventDetails() {
         </p>
         <p>{event.description}</p>
         {event.is_free ? <p>Free Event</p> : <p>Paid Event</p>}
+
+        {user && (
+          <button onClick={handleDelete}>
+            Delete Event
+          </button>
+        )}
       </section>
       <PurchaseForm ticketTypes={ticketTypes} />
     </div>

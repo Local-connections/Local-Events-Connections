@@ -18,7 +18,9 @@ export default function EventCard({ event }) {
   return (
     <div className="event-card">
       <img src={imageSrc} alt={event.title} />
-      <h3><Link to={`/events/${event.id}`}>{event.title}</Link></h3>
+      <h3>
+        <Link to={`/events/${event.id}`}>{event.title}</Link>
+      </h3>
       <p>{event.description}</p>
       <p>Date: {formattedDate}</p>
       <p>Location: {event.location_name}, {event.city}</p>
