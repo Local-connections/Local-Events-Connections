@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
-import { getEventById } from "../api/events";
+import { getEventById, deleteEvent } from "../api/events";
 import { useAuth } from "../context/AuthContext";
 
 export default function Event() {
-  //   const { token } = useAuth();
+  const { user } = useAuth();
   const { id } = useParams();
   const nav = useNavigate();
   const [event, setEvent] = useState(null);
@@ -17,6 +17,18 @@ export default function Event() {
     };
     syncEvent();
   }, [id]);
+
+  async function handleDelete() {
+    try {
+      await deleteEvent(id, user.token);
+
+      console.log("Event deleted");
+
+      nav("/");
+    } catch (error) {
+      console.error("Failed to delete event:", error);
+    }
+  }
 
   if (!event) {
     return <p>Loading...</p>;
@@ -50,6 +62,10 @@ export default function Event() {
         </p>
         <p>{event.description}</p>
         {event.is_free ? <p>Free Event</p> : <p>Paid Event</p>}
+
+        <button onClick={handleDelete}>
+          Delete Event
+        </button>
       </section>
     </div>
   );
