@@ -1,23 +1,35 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router";
-import { getEventById } from "../api/events";
-import { useAuth } from "../context/AuthContext";
+import { useParams } from "react-router";
+import { getEventById, getTicketTypes } from "../api/events";
+import PurchaseForm from "../Components/PurchaseForm";
+import defaultImage from "../assets/defaultEventImage.png";
 
-export default function Event() {
+export default function EventDetails() {
   //   const { token } = useAuth();
   const { id } = useParams();
-  const nav = useNavigate();
   const [event, setEvent] = useState(null);
+  const [ticketTypes, setTicketTypes] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const syncEvent = async () => {
-      const data = await getEventById(id);
-      setEvent(data);
-    };
-    syncEvent();
+    async function loadData() {
+      try {
+        const [eventData, ticketData] = await Promise.all([
+          getEventById(id),
+          getTicketTypes(id),
+        ]);
+        setEvent(eventData);
+        setTicketTypes(ticketData);
+      } catch (err) {
+        setError("Failed to load event details.");
+        console.error(err);
+      }
+    }
+    loadData();
   }, [id]);
 
+  if (error)
+    return <p className="error">{error}</p>;
   if (!event) {
     return <p>Loading...</p>;
   }
@@ -38,7 +50,11 @@ export default function Event() {
   return (
     <div className="event">
       <figure>
-        <img className="eventImage" src={event.image_url} />
+        <img
+          className="eventImage"
+          src={event.image_url || defaultImage}
+          alt={event.title}
+        />
       </figure>
       <section>
         <h1>{event.title}</h1>
@@ -51,6 +67,7 @@ export default function Event() {
         <p>{event.description}</p>
         {event.is_free ? <p>Free Event</p> : <p>Paid Event</p>}
       </section>
+      <PurchaseForm ticketTypes={ticketTypes} />
     </div>
   );
 }

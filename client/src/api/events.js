@@ -31,3 +31,8 @@ export async function updateEvent(id, eventData, token) {
 
   return data;
 }
+
+export async function getTicketTypes(eventId) {
+  const { data } = await axios.get(`${API}/events/${eventId}/ticket-types`);
+  return data;
+}
