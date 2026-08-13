@@ -39,3 +39,11 @@ export async function updateEvent(id, eventData, token) {
 
   return data;
 }
+
+export async function deleteEvent(id, token) {
+  await axios.delete(`${API}/events/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
