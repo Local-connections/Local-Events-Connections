@@ -61,6 +61,7 @@ CREATE TABLE ticket_types (
 CREATE TABLE orders (
   id SERIAL PRIMARY KEY,
   user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  event_id INTEGER NOT NULL REFERENCES events(id) ON DELETE CASCADE,
   ticket_types_id INTEGER NOT NULL REFERENCES ticket_types(id) ON DELETE CASCADE,
   quantity INTEGER NOT NULL CHECK(quantity > 0),
   total_price DECIMAL(10,2) NOT NULL CHECK(total_price >= 0),

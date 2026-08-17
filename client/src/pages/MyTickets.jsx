@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router"; 
+import { Link } from "react-router";
 import { getMyOrders } from "../api/orders";
 import { useAuth } from "../context/AuthContext";
 
@@ -10,7 +10,7 @@ export default function MyOrders() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (!user) return; 
+    if (!user) return;
 
     async function fetchOrders() {
       try {
@@ -25,9 +25,8 @@ export default function MyOrders() {
     }
 
     fetchOrders();
-  }, [user]); 
+  }, [user]);
 
-  
   if (!user) return <p>Please log in to see your orders.</p>;
   if (loading) return <p>Loading orders…</p>;
   if (error) return <p className="error">{error}</p>;
@@ -39,11 +38,16 @@ export default function MyOrders() {
       <ul className="order-list">
         {orders.map((order) => (
           <li key={order.id} className="order-item">
-            <Link to={`/orders/${order.id}`}>
+            <Link to={`/events/${order.event_id}`}>
               <strong>{order.event_title}</strong> - {order.ticket_type_name}
             </Link>
-            <p>Quantity: {order.quantity} | Total: ${order.total_price}</p>
-            <p>Status: {order.order_status} | Ordered: {new Date(order.created_at).toLocaleDateString()}</p>
+            <p>
+              Quantity: {order.quantity} | Total: ${order.total_price}
+            </p>
+            <p>
+              Status: {order.order_status} | Ordered:{" "}
+              {new Date(order.created_at).toLocaleDateString()}
+            </p>
           </li>
         ))}
       </ul>
