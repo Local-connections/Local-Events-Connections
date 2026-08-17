@@ -4,7 +4,7 @@ export async function purchaseTicket(userId, ticketTypeId, quantity) {
   const SQL = `
       SELECT *
       FROM ticket_types
-      WHERE id= $1
+      WHERE id = $1
     `;
 
   const {
@@ -18,13 +18,14 @@ export async function purchaseTicket(userId, ticketTypeId, quantity) {
   if (ticket.quantity !== null && ticket.quantity < quantity) {
     throw new Error("Not enough tickets available");
   }
+
   const totalPrice = parseFloat(ticket.price * quantity).toFixed(2);
 
   if (ticket.quantity !== null) {
     await client.query(
       `UPDATE ticket_types
-        SET quantity = quantity - $1
-        WHERE id = $2`,
+       SET quantity = quantity - $1
+       WHERE id = $2`,
       [quantity, ticketTypeId],
     );
   }
@@ -32,14 +33,14 @@ export async function purchaseTicket(userId, ticketTypeId, quantity) {
   const {
     rows: [order],
   } = await client.query(
-    `INSERT INTO orders (user_id, ticket_types_id, quantity, total_price, order_status)
-        VALUES ($1, $2, $3, $4, 'confirmed')
-        RETURNING *`,
-    [userId, ticketTypeId, quantity, totalPrice],
+    `INSERT INTO orders (user_id, ticket_types_id, event_id, quantity, total_price, order_status)
+     VALUES ($1, $2, $3, $4, $5, 'confirmed')
+     RETURNING *`,
+    [userId, ticketTypeId, ticket.event_id, quantity, totalPrice],
   );
+
   return order;
 }
-
 export async function getOrdersByUser(userId) {
   const sql = `
     SELECT
