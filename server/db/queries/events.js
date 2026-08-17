@@ -171,3 +171,23 @@ export async function deleteEvent(id) {
 
   return result.rows[0];
 }
+
+export async function getEventsByOrganizerId(organizerId) {
+  const result = await client.query(
+    `
+      SELECT
+        events.*,
+        locations.name AS location_name,
+        locations.city,
+        locations.state
+      FROM events
+      JOIN locations
+        ON events.location_id = locations.id
+      WHERE events.organizer_id = $1
+      ORDER BY events.event_date, events.event_time;
+    `,
+    [organizerId],
+  );
+
+  return result.rows;
+}

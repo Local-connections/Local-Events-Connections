@@ -2,6 +2,7 @@ import express from "express";
 import {
   getEvents,
   getEventById,
+  getEventsByOrganizerId,
   getTicketTypesByEventId,
   createEvent,
   addEventCategory,
@@ -122,6 +123,23 @@ router.get("/:eventId/ticket-types", async (req, res, next) => {
     const ticketTypes = await getTicketTypesByEventId(eventId);
 
     res.status(200).json(ticketTypes);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// GET /events/my
+router.get("/my", getUserFromToken, async (req, res, next) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({
+        error: "You must be logged in.",
+      });
+    }
+
+    const events = await getEventsByOrganizerId(req.user.id);
+
+    res.status(200).json(events);
   } catch (error) {
     next(error);
   }
