@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useAuth } from "../context/AuthContext";
-import { getEventById, updateEvent } from "../api/events";
 import { createLocation } from "../api/locations";
 import EventForm from "../Components/EventForm";
+import { getEventById, getTicketTypes, updateEvent } from "../api/events";
 
 export default function EditEvent() {
   const { id } = useParams();
@@ -15,8 +15,13 @@ export default function EditEvent() {
   useEffect(() => {
     async function loadEvent() {
       try {
-        const data = await getEventById(id);
-        setEvent(data);
+        const eventData = await getEventById(id);
+        const ticketData = await getTicketTypes(id);
+
+        setEvent({
+          ...eventData,
+          ticket_types: ticketData,
+        });
       } catch (error) {
         console.error("Failed to load event:", error);
       }
