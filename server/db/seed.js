@@ -136,7 +136,8 @@ const seed = async () => {
       date: addDays(14), // Aug 28, 2026
       time: "18:00:00",
       locationId: annandaleLocationId,
-      imageUrl: "https://images.stockcake.com/public/2/4/c/24ccfb5d-1e48-4cb4-9fa5-59895e029308_large/sunset-yoga-session-stockcake.jpg",
+      imageUrl:
+        "https://images.stockcake.com/public/2/4/c/24ccfb5d-1e48-4cb4-9fa5-59895e029308_large/sunset-yoga-session-stockcake.jpg",
       organizerId: hanId,
       isFree: true,
       categories: [communityCategoryId],
@@ -148,7 +149,8 @@ const seed = async () => {
       date: addDays(21), // Sep 4, 2026
       time: "09:00:00",
       locationId: fairfaxLocationId,
-      imageUrl: "https://michigansbdc.org/wp-content/uploads/2025/06/250507_SmallBusinessResourceFinancingFair_KSM-3463-scaled-2000x1349.jpg",
+      imageUrl:
+        "https://michigansbdc.org/wp-content/uploads/2025/06/250507_SmallBusinessResourceFinancingFair_KSM-3463-scaled-2000x1349.jpg",
       organizerId: alexId,
       isFree: true,
       categories: [businessCategoryId, educationalCategoryId],
@@ -160,7 +162,8 @@ const seed = async () => {
       date: addDays(28), // Sep 11, 2026
       time: "17:00:00",
       locationId: mosaicLocationId,
-      imageUrl: "https://img.freepik.com/premium-photo/festive-lunar-new-year-night-market-with-traditional-foods_1277187-10378.jpg",
+      imageUrl:
+        "https://img.freepik.com/premium-photo/festive-lunar-new-year-night-market-with-traditional-foods_1277187-10378.jpg",
       organizerId: alexId,
       isFree: true,
       categories: [culturalCategoryId, foodCategoryId, celebrationCategoryId],
@@ -172,7 +175,8 @@ const seed = async () => {
       date: addDays(35), // Sep 18, 2026
       time: "10:00:00",
       locationId: fairfaxLocationId,
-      imageUrl: "https://tse3.mm.bing.net/th/id/OIP.Au2sSuMZFUXAd0MJ9aoXagHaDe?r=0&rs=1&pid=ImgDetMain&o=7&rm=3",
+      imageUrl:
+        "https://tse3.mm.bing.net/th/id/OIP.Au2sSuMZFUXAd0MJ9aoXagHaDe?r=0&rs=1&pid=ImgDetMain&o=7&rm=3",
       organizerId: hanId,
       isFree: true,
       categories: [educationalCategoryId, communityCategoryId],
@@ -196,10 +200,15 @@ const seed = async () => {
       date: addDays(49), // Oct 2, 2026
       time: "16:00:00",
       locationId: annandaleLocationId,
-      imageUrl: "https://2.bp.blogspot.com/-3JJKTCRC6u4/WBcGZigMxvI/AAAAAAAAUUs/MUc1GewRFGYckBksXtXNR94BVWjcT4mnQCLcB/s1600/Deepawali.jpg",
+      imageUrl:
+        "https://2.bp.blogspot.com/-3JJKTCRC6u4/WBcGZigMxvI/AAAAAAAAUUs/MUc1GewRFGYckBksXtXNR94BVWjcT4mnQCLcB/s1600/Deepawali.jpg",
       organizerId: hanId,
       isFree: false,
-      categories: [culturalCategoryId, celebrationCategoryId, entertainmentCategoryId],
+      categories: [
+        culturalCategoryId,
+        celebrationCategoryId,
+        entertainmentCategoryId,
+      ],
     },
     {
       title: "Local 5K Fun Run & Community Walk",
@@ -208,7 +217,8 @@ const seed = async () => {
       date: addDays(56), // Oct 9, 2026
       time: "08:00:00",
       locationId: fairfaxLocationId,
-      imageUrl: "https://images.squarespace-cdn.com/content/v1/5d9499d3b5e3a755aa30a8be/d2bf92ea-fd5f-4701-b5b1-1a19edb86b82/unnamed-6.jpg?format=1500w",
+      imageUrl:
+        "https://images.squarespace-cdn.com/content/v1/5d9499d3b5e3a755aa30a8be/d2bf92ea-fd5f-4701-b5b1-1a19edb86b82/unnamed-6.jpg?format=1500w",
       organizerId: alexId,
       isFree: false,
       categories: [localSportsCategoryId, communityCategoryId],
@@ -220,7 +230,8 @@ const seed = async () => {
       date: addDays(63), // Oct 16, 2026
       time: "19:00:00",
       locationId: mosaicLocationId,
-      imageUrl: "https://th.bing.com/th/id/OIP.Al7eloUEABc4PPMFu8sIgwHaEK?w=258&h=180&c=7&r=0&o=7&dpr=1.6&pid=1.7&rm=3",
+      imageUrl:
+        "https://th.bing.com/th/id/OIP.Al7eloUEABc4PPMFu8sIgwHaEK?w=258&h=180&c=7&r=0&o=7&dpr=1.6&pid=1.7&rm=3",
       organizerId: hanId,
       isFree: false,
       categories: [entertainmentCategoryId, foodCategoryId],
@@ -326,15 +337,16 @@ const seed = async () => {
   if (alexTicketTypeId) {
     await client.query(
       `INSERT INTO orders (
+        event_id,
         user_id,
         ticket_types_id,
         quantity,
         total_price,
         order_status
       )
-      VALUES ($1, $2, $3, $4, $5);
+      VALUES ($1, $2, $3, $4, $5, $6);
       `,
-      [alexId, alexTicketTypeId, 1, 25, "confirmed"],
+      [7, alexId, alexTicketTypeId, 1, 25, "confirmed"],
     );
   }
 

@@ -3,7 +3,7 @@ import { getEvents } from "../api/events";
 import EventCard from "../Components/EventCard";
 
 export default function Home() {
-    const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState([]);
 
   useEffect(() => {
     async function fetchEvents() {
@@ -14,7 +14,7 @@ export default function Home() {
   }, []);
   return (
     <div className="homepage">
-      <h2>Welcome to Local Events Hub</h2>
+      <h2>Welcome to In Town</h2>
       {events.map((event) => (
         <EventCard key={event.id} event={event} />
       ))}

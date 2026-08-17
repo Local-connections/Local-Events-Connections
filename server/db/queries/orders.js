@@ -1,46 +1,50 @@
 import client from "../client.js";
 
 export async function purchaseTicket(userId, ticketTypeId, quantity) {
-
-    const SQL = `
+  const SQL = `
       SELECT *
       FROM ticket_types
       WHERE id= $1
     `;
 
-    const {rows:[ticket]} = await client.query(SQL, [ticketTypeId]);
+  const {
+    rows: [ticket],
+  } = await client.query(SQL, [ticketTypeId]);
 
-    if (!ticket) {
-      throw new Error("Ticket type not found");
-    };
+  if (!ticket) {
+    throw new Error("Ticket type not found");
+  }
 
-    if (ticket.quantity !== null && ticket.quantity < quantity) {
-      throw new Error("Not enough tickets available");
-    }
-    const totalPrice  = parseFloat((ticket.price)* quantity).toFixed(2);
+  if (ticket.quantity !== null && ticket.quantity < quantity) {
+    throw new Error("Not enough tickets available");
+  }
+  const totalPrice = parseFloat(ticket.price * quantity).toFixed(2);
 
-    if (ticket.quantity !== null){
-      await client.query(
-        `UPDATE ticket_types
+  if (ticket.quantity !== null) {
+    await client.query(
+      `UPDATE ticket_types
         SET quantity = quantity - $1
         WHERE id = $2`,
-        [quantity, ticketTypeId]
-      );
-    }
+      [quantity, ticketTypeId],
+    );
+  }
 
-        const { rows: [order] } = await client.query(
-        `INSERT INTO orders (user_id, ticket_types_id, quantity, total_price, order_status)
+  const {
+    rows: [order],
+  } = await client.query(
+    `INSERT INTO orders (user_id, ticket_types_id, quantity, total_price, order_status)
         VALUES ($1, $2, $3, $4, 'confirmed')
         RETURNING *`,
-        [userId, ticketTypeId, quantity, totalPrice]
-      );
-    return order;
+    [userId, ticketTypeId, quantity, totalPrice],
+  );
+  return order;
 }
 
-export async function getOrdersByUser(userId){
+export async function getOrdersByUser(userId) {
   const sql = `
     SELECT
     orders.id,
+    orders.event_id,
     orders.quantity,
     orders.total_price,
     orders.order_status,
@@ -56,7 +60,7 @@ export async function getOrdersByUser(userId){
   return rows;
 }
 
-export async function getOrderById(orderId){
+export async function getOrderById(orderId) {
   const sql = `
     SELECT
       orders.*,
@@ -75,6 +79,8 @@ export async function getOrderById(orderId){
     JOIN locations ON events.location_id = locations.id
     WHERE orders.id = $1;
       `;
-  const { rows: [order]} = await client.query(sql, [orderId]);
+  const {
+    rows: [order],
+  } = await client.query(sql, [orderId]);
   return order;
-  }
+}
