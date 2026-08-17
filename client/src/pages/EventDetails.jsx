@@ -68,8 +68,9 @@ export default function EventDetails() {
       </figure>
       <section>
         <h1>{event.title}</h1>
+        <p>Hosted at the {event.location_name}</p>
         <p>
-          Hosted in {event.location_name}, {event.city}
+          Address: {event.address} {event.city}, {event.state} {event.zip}
         </p>
         <p>
           Hosted at {formattedTime} on {formattedDate}
@@ -83,9 +84,7 @@ export default function EventDetails() {
               <button>Edit Event</button>
             </Link>
 
-            <button onClick={handleDelete}>
-              Delete Event
-            </button>
+            <button onClick={handleDelete}>Delete Event</button>
           </>
         )}
       </section>

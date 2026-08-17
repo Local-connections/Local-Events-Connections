@@ -8,6 +8,7 @@ export default function Navbar() {
       <img
         className="navbarImage"
         src="https://cdn-icons-png.flaticon.com/512/871/871976.png"
+        // src = "../assets/events.jpg"
       />
       <p>Events</p>
       <nav id="navlinks">
