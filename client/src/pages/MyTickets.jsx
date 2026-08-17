@@ -26,7 +26,6 @@ export default function MyOrders() {
 
     fetchOrders();
   }, [user]); 
-
   
   if (!user) return <p>Please log in to see your orders.</p>;
   if (loading) return <p>Loading orders…</p>;
