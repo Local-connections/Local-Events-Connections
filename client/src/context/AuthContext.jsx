@@ -1,5 +1,5 @@
-import { createContext, useContext, useState } from "react";
-import { loginUser, registerUser } from "../api/auth";
+import { createContext, useContext, useState , useEffect} from "react";
+import { loginUser, registerUser, getMe } from "../api/auth";
 
 const AuthContext = createContext();
 
@@ -14,19 +14,38 @@ export function AuthProvider({ children }) {
     return null;
   });
 
+    useEffect(() => {
+    async function loadUser() {
+      const token = localStorage.getItem("token");
+      if (token && !user?.id) {
+        try {
+          const me = await getMe();
+          setUser(me);
+        } catch (error) {
+          console.error("Failed to load user:", error);
+          localStorage.removeItem("token");
+          setUser(null);
+        }
+      }
+    }
+    loadUser();
+  }, []);
+
   async function register(userData) {
     const token = await registerUser(userData);
     localStorage.setItem("token", token);
-    setUser({ token });
+    const me2 = await getMe();
+    setUser(me2);
   }
 
   async function login(userData) {
     const token = await loginUser(userData);
     localStorage.setItem("token", token);
-    setUser({ token });
+    const me = await getMe();
+    setUser(me);
   }
 
-  const logout = () => {
+  const logout = async () => {
     localStorage.removeItem("token");
     setUser(null);
   };

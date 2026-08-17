@@ -33,9 +33,12 @@ export default function MyOrders() {
   if (error) return <p className="error">{error}</p>;
   if (orders.length === 0) return <p>You have no orders yet.</p>;
 
+
   return (
     <div className="orders-page">
-      <h2>My Orders</h2>
+      <h2>{user.name} Orders</h2>
+      <p>User ID: {user.id}</p>
+      <p>Email: {user.email}</p>
       <ul className="order-list">
         {orders.map((order) => (
           <li key={order.id} className="order-item">
@@ -44,6 +47,7 @@ export default function MyOrders() {
             </Link>
             <p>Quantity: {order.quantity} | Total: ${order.total_price}</p>
             <p>Status: {order.order_status} | Ordered: {new Date(order.created_at).toLocaleDateString()}</p>
+            <p>Order ID: {order.id}</p>
           </li>
         ))}
       </ul>
