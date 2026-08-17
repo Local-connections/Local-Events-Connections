@@ -34,20 +34,21 @@ export default function MyOrders() {
 
   return (
     <div className="orders-page">
-      <h2>My Orders</h2>
+      <h2>{user.name} Orders</h2>
+      <p>User ID: {user.id}</p>
+      <p>Email: {user.email}</p>
       <ul className="order-list">
         {orders.map((order) => (
           <li key={order.id} className="order-item">
             <Link to={`/events/${order.event_id}`}>
               <strong>{order.event_title}</strong> - {order.ticket_type_name}
             </Link>
-            <p>
-              Quantity: {order.quantity} | Total: ${order.total_price}
-            </p>
+            <p>Quantity: {order.quantity} | Total: ${order.total_price}</p>
             <p>
               Status: {order.order_status} | Ordered:{" "}
               {new Date(order.created_at).toLocaleDateString()}
             </p>
+            <p>Order ID: {order.id}</p>
           </li>
         ))}
       </ul>
