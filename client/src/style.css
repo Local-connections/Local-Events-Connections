@@ -290,5 +290,26 @@ img {
   max-width: none;
 }
 
+.event-type-section {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 
+.event-type-options {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.event-type-choice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.event-type-choice input {
+  width: auto;
+  margin: 0;
+}
 

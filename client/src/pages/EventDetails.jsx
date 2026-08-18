@@ -41,6 +41,8 @@ export default function EventDetails() {
     }
   }
 
+  console.log("event organizer:", event?.organizer_id);
+  console.log("logged in user:", user);
   if (error) return <p className="error">{error}</p>;
   if (!event) return <p>Loading...</p>;
 
@@ -78,7 +80,7 @@ export default function EventDetails() {
         <p>{event.description}</p>
         {event.is_free ? <p>Free Event</p> : <p>Paid Event</p>}
 
-        {user && (
+        {user && Number(event.organizer_id) === Number(user.id) && (
           <>
             <Link to={`/events/${id}/edit`}>
               <button>Edit Event</button>

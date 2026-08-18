@@ -10,3 +10,23 @@ export async function getTicketTypes(eventId) {
   const result = await db.query(sql, [eventId]);
   return result.rows;
 }
+export async function updateTicketType(id, name, price, quantity) {
+  const sql = `
+    UPDATE ticket_types
+    SET
+      name = $1,
+      price = $2,
+      quantity = $3
+    WHERE id = $4
+    RETURNING *;
+  `;
+
+  const result = await db.query(sql, [
+    name,
+    price,
+    quantity,
+    id,
+  ]);
+
+  return result.rows[0];
+}

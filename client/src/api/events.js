@@ -45,7 +45,19 @@ export async function deleteEvent(id, token) {
   });
 }
 
+
+export async function getMyEvents(token) {
+  const { data } = await axios.get(`${API}/events/my`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return data;
+}
+
 export async function getCategories() {
   const { data } = await axios.get(`${API}/categories`);
   return data;
 }
+
