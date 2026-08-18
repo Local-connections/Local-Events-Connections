@@ -44,3 +44,8 @@ export async function deleteEvent(id, token) {
     },
   });
 }
+
+export async function getCategories() {
+  const { data } = await axios.get(`${API}/categories`);
+  return data;
+}
