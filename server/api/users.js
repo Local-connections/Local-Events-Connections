@@ -30,3 +30,14 @@ usersRouter.post(
     res.send(token);
   },
 );
+
+usersRouter.get("/me", async (req, res, next) => {
+  try {
+    if (!req.user) {
+      return res.status(401).send("Unauthorized");
+    }
+    res.send(req.user);
+  } catch (err) {
+    next(err);
+  }
+});
