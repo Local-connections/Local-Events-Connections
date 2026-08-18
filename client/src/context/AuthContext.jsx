@@ -3,12 +3,21 @@ import { loginUser, registerUser } from "../api/auth";
 
 const AuthContext = createContext();
 
+function getUserFromToken(token) {
+  const payload = JSON.parse(atob(token.split(".")[1]));
+
+  return {
+    id: payload.id,
+    token,
+  };
+}
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
     const token = localStorage.getItem("token");
 
     if (token) {
-      return { token };
+      return getUserFromToken(token) ;
     }
 
     return null;
@@ -17,13 +26,13 @@ export function AuthProvider({ children }) {
   async function register(userData) {
     const token = await registerUser(userData);
     localStorage.setItem("token", token);
-    setUser({ token });
+    setUser(getUserFromToken(token));
   }
 
   async function login(userData) {
     const token = await loginUser(userData);
     localStorage.setItem("token", token);
-    setUser({ token });
+    setUser(getUserFromToken(token));
   }
 
   const logout = () => {
