@@ -16,12 +16,16 @@ export default function Profile() {
     return <p>{error}</p>;
   }
   return (
-    <div>
+    <div id="profile">
       <h1>
         {" "}
         Welcome, {user.name} {user.last_name}
       </h1>
       <p>Your email on file with us is {user.email}</p>
+      <p>Your user id is {user.id}</p>
+      <p>
+        Click <Link to={"/orders/"}>here</Link> to go to your orders.
+      </p>
     </div>
   );
 }
