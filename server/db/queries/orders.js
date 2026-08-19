@@ -2,9 +2,13 @@ import client from "../client.js";
 
 export async function purchaseTicket(userId, ticketTypeId, quantity) {
   const SQL = `
-      SELECT *
-      FROM ticket_types
-      WHERE id = $1
+SELECT 
+      ticket_types.*,
+      events.event_date,
+      events.event_time
+    FROM ticket_types
+    JOIN events ON ticket_types.event_id = events.id
+    WHERE ticket_types.id = $1
     `;
 
   const {
@@ -13,6 +17,12 @@ export async function purchaseTicket(userId, ticketTypeId, quantity) {
 
   if (!ticket) {
     throw new Error("Ticket type not found");
+  }
+
+
+    const eventDateTime = new Date(`${ticket.event_date}T${ticket.event_time}`);
+  if (eventDateTime < new Date()) {
+    throw new Error("This event has already passed");
   }
 
   if (ticket.quantity !== null && ticket.quantity < quantity) {
