@@ -6,9 +6,16 @@ export async function getEvents() {
       events.*,
       locations.name AS location_name,
       locations.city,
-      locations.state
+      locations.state,
+      COALESCE(
+        json_agg(categories.name) FILTER (WHERE categories.id IS NOT NULL),
+        '[]'
+      ) AS categories
     FROM events
     JOIN locations ON events.location_id = locations.id
+    LEFT JOIN event_categories ON event_categories.event_id = events.id
+    LEFT JOIN categories ON categories.id = event_categories.category_id
+    GROUP BY events.id, locations.id
     ORDER BY events.event_date, events.event_time;
   `);
 

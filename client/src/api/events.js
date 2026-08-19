@@ -45,6 +45,7 @@ export async function deleteEvent(id, token) {
   });
 }
 
+
 export async function getMyEvents(token) {
   const { data } = await axios.get(`${API}/events/my`, {
     headers: {
@@ -68,3 +69,9 @@ export async function rescheduleEvent(id, eventData, token) {
 
   return data;
 }
+
+export async function getCategories() {
+  const { data } = await axios.get(`${API}/categories`);
+  return data;
+}
+
