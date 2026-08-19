@@ -189,6 +189,16 @@ img {
   margin: 0.5rem 0;
 }
 
+.free-event {
+  color: green;
+  font-weight: bold;
+}
+
+.paid-event {
+  color: red;
+  font-weight: bold;
+}
+
 /* Purchase Form */
 .purchase-form {
   margin-top: 2rem;
@@ -283,7 +293,6 @@ img {
   color: #d9534f;
 }
 
-/* Optional: fix overly narrow forms/labels from your existing CSS */
 .event-details form,
 .event-details label {
   display: block;
