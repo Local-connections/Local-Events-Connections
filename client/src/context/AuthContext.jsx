@@ -3,12 +3,21 @@ import { loginUser, registerUser, getMe } from "../api/auth";
 
 const AuthContext = createContext();
 
+function getUserFromToken(token) {
+  const payload = JSON.parse(atob(token.split(".")[1]));
+
+  return {
+    id: payload.id,
+    token,
+  };
+}
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
     const token = localStorage.getItem("token");
 
     if (token) {
-      return { token };
+      return getUserFromToken(token) ;
     }
 
     return null;

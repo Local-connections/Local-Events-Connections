@@ -2,16 +2,19 @@ import express from "express";
 import {
   getEvents,
   getEventById,
+  getEventsByOrganizerId,
   getTicketTypesByEventId,
   createEvent,
   addEventCategory,
   createTicketType,
   updateEvent,
   deleteEvent,
+  rescheduleEvent,
 } from "../db/queries/events.js";
 
 import getUserFromToken from "../middleware/getUserFromToken.js";
 import requireBody from "../middleware/requireBody.js";
+import { updateTicketType } from "../db/queries/ticketTypes.js";
 
 const router = express.Router();
 
@@ -126,6 +129,80 @@ router.get("/:eventId/ticket-types", async (req, res, next) => {
   }
 });
 
+// GET /events/my
+router.get("/my", getUserFromToken, async (req, res, next) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({
+        error: "You must be logged in.",
+      });
+    }
+
+    const events = await getEventsByOrganizerId(req.user.id);
+
+    res.status(200).json(events);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// PUT /events/:id/reschedule
+router.put(
+  "/:id/reschedule",
+  getUserFromToken,
+  async (req, res, next) => {
+    try {
+      if (!req.user) {
+        return res.status(401).json({
+          error: "You must be logged in.",
+        });
+      }
+
+      const id = Number(req.params.id);
+
+      if (!Number.isInteger(id) || id < 1) {
+        return res.status(400).json({
+          error: "Event id must be a positive number.",
+        });
+      }
+
+      const event = await getEventById(id);
+
+      if (!event) {
+        return res.status(404).json({
+          error: "Event not found.",
+        });
+      }
+
+      if (event.organizer_id !== req.user.id) {
+        return res.status(403).json({
+          error: "You are not allowed to reschedule this event.",
+        });
+      }
+
+      const { event_date, event_time } = req.body;
+
+      if (!event_date || !event_time) {
+        return res.status(400).json({
+          error: "New date and time are required.",
+        });
+      }
+
+      const updatedEvent = await rescheduleEvent(
+        id,
+        event_date,
+        event_time,
+        event.event_date,
+        event.event_time,
+      );
+
+      res.status(200).json(updatedEvent);
+    } catch (error) {
+      next(error);
+    }
+  },
+);
+
 // PUT /events/:id
 router.put("/:id", getUserFromToken, async (req, res, next) => {
   try {
@@ -165,6 +242,7 @@ router.put("/:id", getUserFromToken, async (req, res, next) => {
       location_id,
       image_url,
       is_free,
+      ticket_types,
     } = req.body;
 
     const updatedEvent = await updateEvent(
@@ -177,6 +255,19 @@ router.put("/:id", getUserFromToken, async (req, res, next) => {
       image_url !== undefined ? image_url : event.image_url,
       is_free ?? event.is_free,
     );
+
+    if (Array.isArray(ticket_types)) {
+      for (const ticket of ticket_types) {
+        if (ticket.id) {
+          await updateTicketType(
+            ticket.id,
+            ticket.name,
+            ticket.price,
+            ticket.quantity,
+          );
+        }
+      }
+    }
 
     res.status(200).json(updatedEvent);
   } catch (error) {

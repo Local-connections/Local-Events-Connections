@@ -14,6 +14,15 @@
   display: grid;
   grid-template-rows: repeat(auto-fill, minmax(300px, 1fr));
 }
+
+/*categories*/
+.category-filter {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
 /*event card*/
 .event-card {
   display: flex;
@@ -182,6 +191,16 @@ img {
   margin: 0.5rem 0;
 }
 
+.free-event {
+  color: green;
+  font-weight: bold;
+}
+
+.paid-event {
+  color: red;
+  font-weight: bold;
+}
+
 /* Purchase Form */
 .purchase-form {
   margin-top: 2rem;
@@ -276,7 +295,6 @@ img {
   color: #d9534f;
 }
 
-/* Optional: fix overly narrow forms/labels from your existing CSS */
 .event-details form,
 .event-details label {
   display: block;
@@ -288,4 +306,26 @@ img {
   gap: 0.25rem;
   max-width: 60ch;
   margin: 0 auto;
+}
+.event-type-section {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.event-type-options {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.event-type-choice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.event-type-choice input {
+  width: auto;
+  margin: 0;
 }

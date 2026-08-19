@@ -41,8 +41,20 @@ export default function EventDetails() {
     }
   }
 
+  const refreshTicketTypes = async () => {
+    try {
+      const data = await getTicketTypes(id);
+      setTicketTypes(data);
+    } catch (err) {
+      console.error("Failed to refresh ticket types:", err);
+    }
+  };
+
   if (error) return <p className="error">{error}</p>;
   if (!event) return <p>Loading...</p>;
+
+  const eventDateTime = new Date(`${event.event_date}T${event.event_time}`);
+  const isPastEvent = eventDateTime < new Date();
 
   const formattedTime = new Date(
     `1970-01-01T${event.event_time}`,
@@ -76,19 +88,25 @@ export default function EventDetails() {
           Hosted at {formattedTime} on {formattedDate}
         </p>
         <p>{event.description}</p>
-        {event.is_free ? <p>Free Event</p> : <p>Paid Event</p>}
+        <p className={event.is_free ? "free-event" : "paid-event"}>
+          {event.is_free ? "Free Event" : "Paid Event"}
+        </p>
 
-        {user && (
+        {user && Number(event.organizer_id) === Number(user.id) && (
           <>
             <Link to={`/events/${id}/edit`}>
               <button>Edit Event</button>
             </Link>
-
             <button onClick={handleDelete}>Delete Event</button>
           </>
         )}
       </section>
-      <PurchaseForm ticketTypes={ticketTypes} />
+
+      <PurchaseForm
+        ticketTypes={ticketTypes}
+        onPurchaseSuccess={refreshTicketTypes}
+        isPastEvent={isPastEvent}
+      />
     </div>
   );
 }

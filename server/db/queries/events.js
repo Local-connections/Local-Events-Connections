@@ -6,9 +6,16 @@ export async function getEvents() {
       events.*,
       locations.name AS location_name,
       locations.city,
-      locations.state
+      locations.state,
+      COALESCE(
+        json_agg(categories.name) FILTER (WHERE categories.id IS NOT NULL),
+        '[]'
+      ) AS categories
     FROM events
     JOIN locations ON events.location_id = locations.id
+    LEFT JOIN event_categories ON event_categories.event_id = events.id
+    LEFT JOIN categories ON categories.id = event_categories.category_id
+    GROUP BY events.id, locations.id
     ORDER BY events.event_date, events.event_time;
   `);
 
@@ -167,6 +174,57 @@ export async function deleteEvent(id) {
       RETURNING *;
     `,
     [id],
+  );
+
+  return result.rows[0];
+}
+
+export async function getEventsByOrganizerId(organizerId) {
+  const result = await client.query(
+    `
+      SELECT
+        events.*,
+        locations.name AS location_name,
+        locations.city,
+        locations.state
+      FROM events
+      JOIN locations
+        ON events.location_id = locations.id
+      WHERE events.organizer_id = $1
+      ORDER BY events.event_date, events.event_time;
+    `,
+    [organizerId],
+  );
+
+  return result.rows;
+}
+
+export async function rescheduleEvent(
+  id,
+  newDate,
+  newTime,
+  oldDate,
+  oldTime,
+) {
+  const result = await client.query(
+    `
+      UPDATE events
+      SET
+        previous_event_date = $1,
+        previous_event_time = $2,
+        event_date = $3,
+        event_time = $4,
+        is_rescheduled = TRUE
+      WHERE id = $5
+      RETURNING *;
+    `,
+    [
+      oldDate,
+      oldTime,
+      newDate,
+      newTime,
+      id,
+    ],
   );
 
   return result.rows[0];
