@@ -35,7 +35,10 @@ location_id INTEGER NOT NULL REFERENCES locations(id) ON DELETE SET NULL,
 image_url TEXT,
 organizer_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-is_free BOOLEAN DEFAULT FALSE
+is_free BOOLEAN DEFAULT FALSE,
+previous_event_date DATE,
+previous_event_time TIME,
+is_rescheduled BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE categories (
