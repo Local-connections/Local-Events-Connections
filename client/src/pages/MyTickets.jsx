@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
-import { getMyOrders } from "../api/orders";
+import { getMyOrders, deleteOrder } from "../api/orders";
 import { useAuth } from "../context/AuthContext";
 
 export default function MyOrders() {
@@ -43,12 +43,21 @@ export default function MyOrders() {
             <Link to={`/events/${order.event_id}`}>
               <strong>{order.event_title}</strong> - {order.ticket_type_name}
             </Link>
-            <p>Quantity: {order.quantity} | Total: ${order.total_price}</p>
+            <p>
+              Quantity: {order.quantity} | Total: ${order.total_price}
+            </p>
             <p>
               Status: {order.order_status} | Ordered:{" "}
               {new Date(order.created_at).toLocaleDateString()}
             </p>
             <p>Order ID: {order.id}</p>
+            <button
+              onClick={async () => {
+                await deleteOrder(order.id);
+              }}
+            >
+              Refund order
+            </button>
           </li>
         ))}
       </ul>

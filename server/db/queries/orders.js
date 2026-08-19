@@ -19,8 +19,7 @@ SELECT
     throw new Error("Ticket type not found");
   }
 
-
-    const eventDateTime = new Date(`${ticket.event_date}T${ticket.event_time}`);
+  const eventDateTime = new Date(`${ticket.event_date}T${ticket.event_time}`);
   if (eventDateTime < new Date()) {
     throw new Error("This event has already passed");
   }
@@ -94,4 +93,42 @@ export async function getOrderById(orderId) {
     rows: [order],
   } = await client.query(sql, [orderId]);
   return order;
+}
+
+export async function updateOrder(
+  id,
+  user_id,
+  event_id,
+  ticket_types_id,
+  quantity,
+  total_price,
+  order_status,
+  created_at,
+) {
+  const result = await client.query(
+    `
+    UPDATE orders
+    SET  
+      user_id = $1,
+      event_id = $2,
+      ticket_types_id = $3,
+      quantity = $4,
+      total_price = $5,
+      order_status = $6,
+      created_at = $7
+    WHERE id = $8
+    RETURNING *;
+    `,
+    [
+      user_id,
+      event_id,
+      ticket_types_id,
+      quantity,
+      total_price,
+      order_status,
+      created_at,
+      id,
+    ],
+  );
+  return result.rows[0];
 }
