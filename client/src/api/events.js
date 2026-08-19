@@ -56,6 +56,20 @@ export async function getMyEvents(token) {
   return data;
 }
 
+export async function rescheduleEvent(id, eventData, token) {
+  const { data } = await axios.put(
+    `${API}/events/${id}/reschedule`,
+    eventData,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+
+  return data;
+}
+
 export async function getCategories() {
   const { data } = await axios.get(`${API}/categories`);
   return data;

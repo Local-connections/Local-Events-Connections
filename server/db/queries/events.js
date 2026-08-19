@@ -198,3 +198,34 @@ export async function getEventsByOrganizerId(organizerId) {
 
   return result.rows;
 }
+
+export async function rescheduleEvent(
+  id,
+  newDate,
+  newTime,
+  oldDate,
+  oldTime,
+) {
+  const result = await client.query(
+    `
+      UPDATE events
+      SET
+        previous_event_date = $1,
+        previous_event_time = $2,
+        event_date = $3,
+        event_time = $4,
+        is_rescheduled = TRUE
+      WHERE id = $5
+      RETURNING *;
+    `,
+    [
+      oldDate,
+      oldTime,
+      newDate,
+      newTime,
+      id,
+    ],
+  );
+
+  return result.rows[0];
+}
