@@ -50,6 +50,7 @@ SELECT
 
   return order;
 }
+
 export async function getOrdersByUser(userId) {
   const sql = `
     SELECT
@@ -112,23 +113,31 @@ export async function updateOrder(
       user_id = $1,
       event_id = $2,
       ticket_types_id = $3,
-      quantity = $4,
-      total_price = $5,
-      order_status = $6,
-      created_at = $7
-    WHERE id = $8
+      quantity = 0,
+      total_price = $4,
+      order_status = $5,
+      created_at = $6
+    WHERE id = $7
     RETURNING *;
     `,
     [
       user_id,
       event_id,
       ticket_types_id,
-      quantity,
       total_price,
       order_status,
       created_at,
       id,
     ],
+  );
+
+  const ticketResult = await client.query(
+    `
+    UPDATE ticket_types
+    SET quantity = quantity + $1
+    WHERE id = $2
+    `,
+    [quantity, ticket_types_id],
   );
   return result.rows[0];
 }

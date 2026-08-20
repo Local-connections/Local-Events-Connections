@@ -26,7 +26,6 @@ export async function deleteOrder(orderId) {
     headers: { Authorization: `Bearer ${token}` },
   });
   const response = data;
-  response.quantity = 0;
   response.total_price = 0;
   response.order_status = "refunded";
   const { result } = await axios.put(`${API}/orders/${orderId}`, response, {
