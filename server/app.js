@@ -1,12 +1,13 @@
 import express from "express";
 import cors from "cors";  
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: process.env.CLIENT_URL || "http://localhost:5173",
+}));
 export default app;
 
 import morgan from "morgan";
 
-//TODO api routes imports here Ex. import usersRouter from "#api/users"
 import locationsRouter from "./api/locations.js";
 import usersRouter from "./api/users.js";
 import eventsRouter from "./api/events.js";
@@ -21,7 +22,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(getUserFromToken);
 app.use(morgan("dev"));
 
-//TODO: routers goes here Ex.  app.use("/users", usersRouter);
 app.use("/locations", locationsRouter);
 app.use("/users", usersRouter);
 app.use("/categories", categoriesRouter);

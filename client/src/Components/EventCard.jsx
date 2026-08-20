@@ -26,9 +26,9 @@ export default function EventCard({ event }) {
         <img src={imageSrc} alt={event.title} />
       </Link>
       <div className="event-card-body">
-      <h3>
+      <h2 className="event-card-title">
         <Link to={`/events/${event.id}`}>{event.title}</Link>
-      </h3>
+      </h2>
       <p>{truncateText(event.description, 200)}</p>
       <p>Date: {formattedDate}</p>
       <p>Location: {event.location_name}, {event.city}</p>

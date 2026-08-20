@@ -2,9 +2,13 @@ import client from "../client.js";
 
 export async function purchaseTicket(userId, ticketTypeId, quantity) {
   const SQL = `
-      SELECT *
-      FROM ticket_types
-      WHERE id = $1
+SELECT 
+      ticket_types.*,
+      events.event_date,
+      events.event_time
+    FROM ticket_types
+    JOIN events ON ticket_types.event_id = events.id
+    WHERE ticket_types.id = $1
     `;
 
   const {
@@ -13,6 +17,11 @@ export async function purchaseTicket(userId, ticketTypeId, quantity) {
 
   if (!ticket) {
     throw new Error("Ticket type not found");
+  }
+
+  const eventDateTime = new Date(`${ticket.event_date}T${ticket.event_time}`);
+  if (eventDateTime < new Date()) {
+    throw new Error("This event has already passed");
   }
 
   if (ticket.quantity !== null && ticket.quantity < quantity) {
@@ -41,6 +50,7 @@ export async function purchaseTicket(userId, ticketTypeId, quantity) {
 
   return order;
 }
+
 export async function getOrdersByUser(userId) {
   const sql = `
     SELECT
@@ -84,4 +94,40 @@ export async function getOrderById(orderId) {
     rows: [order],
   } = await client.query(sql, [orderId]);
   return order;
+}
+
+export async function updateOrder(
+  id,
+  user_id,
+  event_id,
+  ticket_types_id,
+  quantity,
+  total_price,
+  order_status,
+  created_at,
+) {
+  const result = await client.query(
+    `
+    UPDATE orders
+    SET  
+      user_id = $1,
+      event_id = $2,
+      ticket_types_id = $3,
+      order_status = $4,
+      created_at = $5
+    WHERE id = $6
+    RETURNING *;
+    `,
+    [user_id, event_id, ticket_types_id, order_status, created_at, id],
+  );
+
+  const ticketResult = await client.query(
+    `
+    UPDATE ticket_types
+    SET quantity = quantity + $1
+    WHERE id = $2
+    `,
+    [quantity, ticket_types_id],
+  );
+  return result.rows[0];
 }

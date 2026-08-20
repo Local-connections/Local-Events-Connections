@@ -7,6 +7,7 @@ import CreateEvent from "./pages/CreateEvent";
 import Event from "./pages/EventDetails";
 import Events from "./pages/Events";
 import EventDetails from "./pages/EventDetails";
+import Profile from "./pages/Profile";
 import EditEvent from "./pages/EditEvent";
 import MyOrders from "./pages/MyTickets";
 import MyEvents from "./pages/MyEvents";
@@ -19,6 +20,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/events/:id" element={<Event />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/account" element={<Profile />} />
         <Route path="/login" element={<Login />} />
         <Route path="/events/create" element={<CreateEvent />} />
         <Route path="/events" element={<Events />} />
