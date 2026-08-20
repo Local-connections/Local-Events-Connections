@@ -44,7 +44,12 @@ export default function ManageEvent() {
 
       navigate(`/events/${id}`);
     } catch (error) {
-      console.error("Failed to reschedule event:", error);
+        const message =
+        error.response?.data?.error || "Failed to reschedule event.";
+
+        alert(message);
+
+        console.error("Failed to reschedule event:", error);
     }
   }
 
@@ -61,7 +66,12 @@ export default function ManageEvent() {
       await deleteEvent(id, user.token);
       navigate("/my-events");
     } catch (error) {
-      console.error("Failed to delete event:", error);
+        const message =
+        error.response?.data?.error || "Failed to reschedule event.";
+
+        alert(message);
+
+        console.error("Failed to reschedule event:", error);
     }
   }
 

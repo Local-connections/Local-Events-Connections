@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
-import { Link, useParams, useNavigate } from "react-router";
-import { getEventById, getTicketTypes, deleteEvent } from "../api/events";
+import { Link, useParams } from "react-router";
+import { getEventById, getTicketTypes } from "../api/events";
 import { useAuth } from "../context/AuthContext";
 import PurchaseForm from "../Components/PurchaseForm";
 import defaultImage from "../assets/defaultEventImage.png";
 
 export default function EventDetails() {
   const { id } = useParams();
-  const nav = useNavigate();
   const { user } = useAuth();
   const [event, setEvent] = useState(null);
   const [ticketTypes, setTicketTypes] = useState([]);
@@ -30,19 +29,6 @@ export default function EventDetails() {
     loadData();
   }, [id]);
 
-  async function handleDelete() {
-    try {
-      const token = localStorage.getItem("token");
-      await deleteEvent(id, token);
-      console.log("Event deleted");
-      nav("/");
-    } catch (error) {
-      console.error("Failed to delete event:", error);
-    }
-  }
-
-  console.log("event organizer:", event?.organizer_id);
-  console.log("logged in user:", user);
   if (error) return <p className="error">{error}</p>;
   if (!event) return <p>Loading...</p>;
 
@@ -77,17 +63,42 @@ export default function EventDetails() {
         <p>
           Hosted at {formattedTime} on {formattedDate}
         </p>
+
+        {event.is_rescheduled && (
+          <div className="rescheduled-notice">
+            <h3>⚠ Event Rescheduled</h3>
+
+            <p>
+              Previous date:{" "}
+              {new Date(event.previous_event_date).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </p>
+
+            <p>
+              Previous time:{" "}
+              {new Date(
+                `1970-01-01T${event.previous_event_time}`,
+              ).toLocaleTimeString("en-US", {
+                hour: "numeric",
+                minute: "2-digit",
+              })}
+            </p>
+
+            <p>New date: {formattedDate}</p>
+            <p>New time: {formattedTime}</p>
+          </div>
+        )}
+
         <p>{event.description}</p>
         {event.is_free ? <p>Free Event</p> : <p>Paid Event</p>}
 
         {user && Number(event.organizer_id) === Number(user.id) && (
-          <>
-            <Link to={`/events/${id}/edit`}>
-              <button>Edit Event</button>
-            </Link>
-
-            <button onClick={handleDelete}>Delete Event</button>
-          </>
+          <Link to={`/events/${id}/manage`}>
+            <button>Manage Event</button>
+          </Link>
         )}
       </section>
       <PurchaseForm ticketTypes={ticketTypes} />
