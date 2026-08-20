@@ -1,16 +1,19 @@
 import { NavLink } from "react-router";
 import { useAuth } from "../context/AuthContext";
+import logo from "../assets/inTownLogo.png";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
   return (
     <header id="navbar">
+      <div className="brand">
       <img
         className="navbarImage"
-        src="https://cdn-icons-png.flaticon.com/512/871/871976.png"
+        src={logo}
         // src = "../assets/events.jpg"
       />
-      <p>Events</p>
+      <span className="brandName"><h1>Town</h1></span>
+      </div>
       <nav id="navlinks">
         <NavLink className="links" to="/">
           Home

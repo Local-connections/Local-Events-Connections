@@ -27,7 +27,8 @@ export default function Home() {
 
   return (
     <div className="homepage">
-      <h2>Welcome to In Town</h2>
+      <h2>Welcome to <strong>inTown</strong> events</h2>
+      <h3>Because there's always something happening.</h3>
 
       <div className="category-filter">
         <button

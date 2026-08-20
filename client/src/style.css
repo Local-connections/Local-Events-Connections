@@ -1,3 +1,11 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 /*homepage*/
 .homepage {
   max-width: 1200px;
@@ -8,6 +16,14 @@
 .homepage h2 {
   text-align: center;
   margin-bottom: 30px;
+  color: #2857c6;
+  font-family: sans-serif;
+  margin: 0;
+}
+.homepage h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #1a3a83;
 }
 
 .events-grid {
@@ -97,25 +113,77 @@ a {
 
 #navbar {
   display: flex;
-  gap: 1ch;
   justify-content: space-between;
   align-items: center;
-  padding: 0.25rem 0;
-  margin-bottom: 0.5rem;
-  border-bottom: 2px solid black;
-  height: 1.5lh;
+  border-bottom: 2px solid #dee2e6;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  flex-wrap: wrap;              
+  gap: 0.5rem 1rem;  
+  max-width: 1000px;
+  margin: 0 auto;
+  background-color: white;  
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
-img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
+.navbarImage {
+  height: 6rem;                
+}
+
+.brandName {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+
+/*navbar links*/
 #navlinks {
   display: flex;
-  gap: 1ch;
+  align-items: center;
+  gap: 1.5rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
 }
+
+.links {
+  text-decoration: none;
+  color: #495057;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.links:hover {
+  background-color: #e9ecef;
+  color: #000;
+}
+
+.links.active {
+  background-color: #d6dbfa;
+}
+
+#logout {
+  cursor: pointer;
+  color: #dc3545;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+#logout:hover {
+  background-color: #f8d7da;
+}
+
+
 
 .event {
   display: flex;
@@ -328,4 +396,23 @@ img {
 .event-type-choice input {
   width: auto;
   margin: 0;
+}
+
+/* Responsnsive */
+@media (max-width: 600px) {
+  #navbar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.5rem 1rem;
+  }
+
+  .brand {
+    justify-content: center;      
+  }
+
+  #navlinks {
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
 }
