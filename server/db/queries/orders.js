@@ -113,22 +113,12 @@ export async function updateOrder(
       user_id = $1,
       event_id = $2,
       ticket_types_id = $3,
-      quantity = 0,
-      total_price = $4,
-      order_status = $5,
-      created_at = $6
-    WHERE id = $7
+      order_status = $4,
+      created_at = $5
+    WHERE id = $6
     RETURNING *;
     `,
-    [
-      user_id,
-      event_id,
-      ticket_types_id,
-      total_price,
-      order_status,
-      created_at,
-      id,
-    ],
+    [user_id, event_id, ticket_types_id, order_status, created_at, id],
   );
 
   const ticketResult = await client.query(

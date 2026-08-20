@@ -57,7 +57,15 @@ export default function MyOrders() {
           .map((order) => (
             <li key={order.id} className="order-item">
               <Link to={`/events/${order.event_id}`}>
-                <strong>{order.event_title}</strong> - {order.ticket_type_name}
+                <strong
+                  className={
+                    order.order_status === "refunded"
+                      ? "refunded"
+                      : "eventTitle"
+                  }
+                >
+                  {order.event_title} - {order.ticket_type_name}
+                </strong>
               </Link>
               <p>
                 Quantity: {order.quantity} | Total: ${order.total_price}
@@ -69,7 +77,7 @@ export default function MyOrders() {
               <p>Order ID: {order.id}</p>
               <button
                 onClick={() => handleRefund(order.id)}
-                disabled={order.quantity <= 0}
+                disabled={order.order_status === "refunded"}
               >
                 Refund order
               </button>
