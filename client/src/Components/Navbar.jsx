@@ -20,6 +20,9 @@ export default function Navbar() {
         </NavLink>
         {user ? (
           <>
+            <NavLink className="links" to="/my-events">
+              My Events
+            </NavLink>
             <NavLink className="links" to="/orders">
               My Tickets
             </NavLink>
