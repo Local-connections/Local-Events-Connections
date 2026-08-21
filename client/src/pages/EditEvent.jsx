@@ -52,6 +52,11 @@ export default function EditEvent() {
 
       navigate("/");
     } catch (error) {
+      const message =
+        error.response?.data?.error || "Failed to update event.";
+
+      alert(message);
+
       console.error("Failed to update event:", error);
     }
   }

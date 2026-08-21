@@ -18,6 +18,25 @@ import { updateTicketType } from "../db/queries/ticketTypes.js";
 
 const router = express.Router();
 
+function isWithin24Hours(event) {
+  const eventStart = new Date(
+    `${event.event_date.toISOString().slice(0, 10)}T${event.event_time}`,
+  );
+
+  const now = new Date();
+
+  const hoursUntilEvent =
+    (eventStart.getTime() - now.getTime()) / (1000 * 60 * 60);
+
+    console.log("Event date:", event.event_date);
+    console.log("Event time:", event.event_time);
+    console.log("Event start:", eventStart);
+    console.log("Current time:", now);
+    console.log("Hours until event:", hoursUntilEvent);
+
+  return hoursUntilEvent <= 24;
+}
+
 // GET /events
 router.get("/", async (req, res, next) => {
   try {
@@ -180,6 +199,14 @@ router.put(
         });
       }
 
+      if (isWithin24Hours(event)) {
+        return res.status(403).json({
+          error:
+            "This event cannot be rescheduled within 24 hours of the start time.",
+        });
+      }
+
+
       const { event_date, event_time } = req.body;
 
       if (!event_date || !event_time) {
@@ -234,6 +261,12 @@ router.put("/:id", getUserFromToken, async (req, res, next) => {
       });
     }
 
+    if (isWithin24Hours(event)) {
+      return res.status(403).json({
+        error: "This event cannot be changed within 24 hours of the start time.",
+      });
+    }
+
     const {
       title,
       description,
@@ -261,6 +294,13 @@ router.put("/:id", getUserFromToken, async (req, res, next) => {
         if (ticket.id) {
           await updateTicketType(
             ticket.id,
+            ticket.name,
+            ticket.price,
+            ticket.quantity,
+          );
+        } else {
+          await createTicketType(
+            id,
             ticket.name,
             ticket.price,
             ticket.quantity,
@@ -305,6 +345,23 @@ router.delete("/:id", getUserFromToken, async (req, res, next) => {
         error: "You are not allowed to delete this event.",
       });
     }
+
+    if (isWithin24Hours(event)) {
+      return res.status(403).json({
+        error: "This event cannot be deleted within 24 hours of the start time.",
+      });
+    }
+
+    const {
+      title,
+      description,
+      event_date,
+      event_time,
+      location_id,
+      image_url,
+      is_free,
+      ticket_types,
+    } = req.body;
 
     await deleteEvent(id);
 
