@@ -108,12 +108,6 @@ export default function EventDetails() {
         <p className={event.is_free ? "free-event" : "paid-event"}>
           {event.is_free ? "Free Event" : "Paid Event"}
         </p>
-
-        {user && Number(event.organizer_id) === Number(user.id) && (
-          <Link to={`/events/${id}/manage`}>
-            <button>Manage Event</button>
-          </Link>
-        )}
       </section>
 
       <PurchaseForm
