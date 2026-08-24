@@ -43,9 +43,10 @@ export default function MyEvents() {
       ) : (
         events.map((event) => (
           <div key={event.id} className="my-event-item">
+            <hr className="event-divider" />
             <EventCard event={event} />
             <Link to={`/events/${event.id}/manage`}>
-              <button>Manage Event</button>
+              <button>⛯ Manage Event</button>
             </Link>
           </div>
         ))

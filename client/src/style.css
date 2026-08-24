@@ -515,3 +515,65 @@ a {
   color: red;
   text-decoration: line-through;
 }
+
+/*My Events*/
+.my-events-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.my-event-item {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.my-events-page > a > button {
+  display: block;
+  margin: 1rem auto 3rem auto;
+  padding: 0.6rem 1.5rem;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 2rem;  
+}
+
+.my-events-page > a > button:hover {
+  background: #0056b3;
+}
+
+/* Manage Event button */
+.my-event-item > a > button {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1.25rem;
+  background: #424242;   /* green for manage */
+  color: #fff;
+  font-size: 1.25rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.my-event-item > a > button:hover {
+  background: #218838;
+}
+
+.event-divider {
+  margin: 0 auto 1.5rem auto;
+  border: 5px solid #b7b7b7;
+  border-radius: 5px;
+  width: 80%;
+}
+
+.my-events-page h2 {
+  text-align: center;
+  color: #310762;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  letter-spacing: -0.5px;
+  font-family: cursive;
+}
