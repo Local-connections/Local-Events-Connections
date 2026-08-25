@@ -23,13 +23,13 @@ export function AuthProvider({ children }) {
     return null;
   });
 
-    useEffect(() => {
+  useEffect(() => {
     async function loadUser() {
       const token = localStorage.getItem("token");
-      if (token && !user?.id) {
+      if (token && !user?.email) {
         try {
           const me = await getMe();
-          setUser(me);
+          setUser({ ...me, token });
         } catch (error) {
           console.error("Failed to load user:", error);
           localStorage.removeItem("token");
