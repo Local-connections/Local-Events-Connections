@@ -527,6 +527,442 @@ a {
   text-decoration: line-through;
 }
 
+.event-form {
+  width: 100%;
+  max-width: 760px;
+  margin: 40px auto;
+  padding: 32px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.event-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.event-form label {
+  font-weight: 600;
+}
+
+.event-form input,
+.event-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 12px;
+  border: 1px solid #d6d6d6;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+.event-form textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.event-form .event-type-options {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.event-form .event-type-choice {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  width: auto;
+  margin: 0;
+}
+
+.event-form .event-type-choice input[type="radio"] {
+  width: auto;
+  margin: 0;
+  padding: 0;
+}
+
+.event-form .event-type-choice span {
+  white-space: nowrap;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.location-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 16px;
+}
+
+.event-type-section {
+  margin: 24px 0;
+  padding: 18px 20px;
+  border-radius: 12px;
+  background: #f7f8fc;
+}
+
+.event-type-section p {
+  margin: 0 0 12px;
+  font-weight: 700;
+}
+
+.event-type-options {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.event-type-choice {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: auto;
+  margin: 0;
+  font-weight: 500;
+}
+
+.event-type-choice input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  padding: 0;
+  flex: 0 0 auto;
+}
+
+.event-type-choice span {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.ticket-section {
+  margin-top: 28px;
+}
+
+.ticket-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 16px;
+}
+
+.ticket-section-header h3 {
+  margin-bottom: 4px;
+}
+
+.ticket-section-header p {
+  margin: 0;
+}
+
+.ticket-form-card {
+  padding: 20px;
+  margin-bottom: 16px;
+  border: 1px solid #dddddd;
+  border-radius: 12px;
+  background: #fafafa;
+}
+
+.ticket-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.ticket-card-header h4 {
+  margin: 0;
+}
+
+.ticket-input-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 16px;
+}
+
+.add-ticket-btn,
+.remove-ticket-btn,
+.event-submit-btn {
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.add-ticket-btn {
+  padding: 9px 14px;
+  background: #eef1ff;
+}
+
+.remove-ticket-btn {
+  padding: 8px 12px;
+  background: #fff0f0;
+}
+
+.event-submit-btn {
+  width: 100%;
+  margin-top: 24px;
+  padding: 13px;
+  font-weight: 700;
+  background: #4f63d8;
+  color: white;
+}
+
+.event-submit-btn:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 700px) {
+  .form-row,
+  .location-row,
+  .ticket-input-row {
+    grid-template-columns: 1fr;
+  }
+
+  .event-form {
+    margin: 20px 12px;
+    padding: 20px;
+  }
+
+  .ticket-section-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+.event-type-options {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.event-type-choice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: auto;
+  cursor: pointer;
+}
+
+.event-type-choice input {
+  width: auto;
+  margin: 0;
+}
+
+.event-type-choice span {
+  white-space: nowrap;
+}
+
+.event-page {
+  width: 100%;
+  padding: 32px 20px 60px;
+}
+
+.event-page h1 {
+  max-width: 760px;
+  margin: 0 auto 20px;
+  font-size: 32px;
+}
+
+/* Fix Event Type radio buttons */
+.event-form .event-type-section .event-type-options {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 40px;
+  margin-top: 12px;
+}
+
+.event-form .event-type-section .event-type-choice {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  width: auto;
+  min-width: 120px;
+  margin: 0;
+  padding: 0;
+}
+
+.event-form
+  .event-type-section
+  .event-type-choice
+  input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  margin: 0;
+  padding: 0;
+  flex: none;
+}
+
+.event-form .event-type-section .event-type-choice span {
+  display: inline-block;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+  line-height: 1.4;
+}
+
+.location-row,
+.ticket-input-row {
+  align-items: end;
+}
+
+.location-row .form-group,
+.ticket-input-row .form-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.manage-event-page {
+  width: 100%;
+  padding: 40px 20px 60px;
+}
+
+.manage-event-container {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.manage-event-header {
+  margin-bottom: 24px;
+}
+
+.manage-event-header h2 {
+  margin-bottom: 6px;
+  font-size: 30px;
+}
+
+.manage-event-header p {
+  margin: 0;
+  font-size: 18px;
+  color: #555;
+}
+
+.manage-card {
+  margin-bottom: 20px;
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.manage-card h3 {
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.manage-card p {
+  margin-top: 0;
+  margin-bottom: 18px;
+  color: #666;
+}
+
+.reschedule-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.reschedule-row label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.reschedule-row input {
+  padding: 11px 12px;
+  border: 1px solid #d6d6d6;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+.manage-edit-btn,
+.manage-reschedule-btn,
+.manage-delete-btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.manage-edit-btn {
+  background: #eef1ff;
+}
+
+.manage-reschedule-btn {
+  background: #5967d8;
+  color: white;
+}
+
+.delete-card {
+  border-color: #f2caca;
+  background: #fffafa;
+}
+
+.manage-delete-btn {
+  background: #d9534f;
+  color: white;
+}
+
+.manage-edit-btn:hover,
+.manage-reschedule-btn:hover,
+.manage-delete-btn:hover {
+  opacity: 0.9;
+}
+
+/* Manage Event - Reschedule Section */
+
+.manage-card .reschedule-form {
+  display: block;
+  width: 100%;
+}
+
+.manage-card .reschedule-row {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 420px;
+  margin-bottom: 20px;
+}
+
+.manage-card .reschedule-row label {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.manage-card .reschedule-row input[type="date"],
+.manage-card .reschedule-row input[type="time"] {
+  width: 300px !important;
+  min-width: 300px !important;
+  height: 44px;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border: 1px solid #d6d6d6;
+  border-radius: 8px;
+  font-size: 15px;
+}
 /*My Events*/
 .my-events-page {
   max-width: 1000px;

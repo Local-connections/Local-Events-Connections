@@ -80,34 +80,33 @@ export default function EventForm({
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>
-          Title:
-          <input
-            type="text"
-            name="title"
-            defaultValue={initialData.title || ""}
-            required
-          />
-        </label>
+    <form className="event-form" onSubmit={handleSubmit}>
+      <div className="form-group">
+        <label htmlFor="title">Title</label>
+        <input
+          id="title"
+          type="text"
+          name="title"
+          defaultValue={initialData.title || ""}
+          required
+        />
       </div>
 
-      <div>
-        <label>
-          Description:
-          <textarea
-            name="description"
-            defaultValue={initialData.description || ""}
-            required
-          />
-        </label>
+      <div className="form-group">
+        <label htmlFor="description">Description</label>
+        <textarea
+          id="description"
+          name="description"
+          defaultValue={initialData.description || ""}
+          required
+        />
       </div>
 
-      <div>
-        <label>
-          Event Date:
+      <div className="form-row">
+        <div className="form-group">
+          <label htmlFor="event_date">Event Date</label>
           <input
+            id="event_date"
             type="date"
             name="event_date"
             defaultValue={
@@ -117,13 +116,12 @@ export default function EventForm({
             }
             required
           />
-        </label>
-      </div>
+        </div>
 
-      <div>
-        <label>
-          Event Time:
+        <div className="form-group">
+          <label htmlFor="event_time">Event Time</label>
           <input
+            id="event_time"
             type="time"
             name="event_time"
             defaultValue={
@@ -133,76 +131,73 @@ export default function EventForm({
             }
             required
           />
-        </label>
+        </div>
       </div>
 
-      <div>
-        <label>
-          Address:
-          <input
-            type="text"
-            name="address"
-            defaultValue={initialData.address || ""}
-            required
-          />
-        </label>
+      <div className="form-group">
+        <label htmlFor="address">Address</label>
+        <input
+          id="address"
+          type="text"
+          name="address"
+          defaultValue={initialData.address || ""}
+          required
+        />
       </div>
 
-      <div>
-        <label>
-          City:
+      <div className="location-row">
+        <div className="form-group">
+          <label htmlFor="city">City</label>
           <input
+            id="city"
             type="text"
             name="city"
             defaultValue={initialData.city || ""}
             required
           />
-        </label>
-      </div>
+        </div>
 
-      <div>
-        <label>
-          State:
+        <div className="form-group">
+          <label htmlFor="state">State</label>
           <input
+            id="state"
             type="text"
             name="state"
             defaultValue={initialData.state || ""}
             required
           />
-        </label>
-      </div>
+        </div>
 
-      <div>
-        <label>
-          ZIP Code:
+        <div className="form-group">
+          <label htmlFor="zip">ZIP Code</label>
           <input
+            id="zip"
             type="text"
             name="zip"
             defaultValue={initialData.zip || ""}
             required
           />
-        </label>
+        </div>
       </div>
 
-      <div>
-        <label>
-          Image URL:
-          <input
-            type="text"
-            name="image_url"
-            defaultValue={initialData.image_url || ""}
-          />
-        </label>
+      <div className="form-group">
+        <label htmlFor="image_url">Image URL</label>
+        <input
+          id="image_url"
+          type="text"
+          name="image_url"
+          defaultValue={initialData.image_url || ""}
+          placeholder="https://example.com/image.jpg"
+        />
       </div>
 
       <div className="event-type-section">
-        <p>Event Type:</p>
+        <p>Event Type</p>
 
         <div className="event-type-options">
-          <div className="event-type-choice">
+          <label className="event-type-choice">
             <input
               type="radio"
-              id="free-event"
               name="event_type"
               value="free"
               checked={isFree === true}
@@ -210,12 +205,11 @@ export default function EventForm({
               required
             />
             <span>Free Event</span>
-          </div>
+          </label>
 
-          <div className="event-type-choice">
+          <label className="event-type-choice">
             <input
               type="radio"
-              id="paid-event"
               name="event_type"
               value="paid"
               checked={isFree === false}
@@ -223,21 +217,46 @@ export default function EventForm({
               required
             />
             <span>Paid Event</span>
-          </div>
+          </label>
         </div>
       </div>
 
       {isFree === false && (
-        <div>
-          <h3>Ticket Information</h3>
+        <div className="ticket-section">
+          <div className="ticket-section-header">
+            <div>
+              <h3>Ticket Information</h3>
+              <p>Add the ticket options available for this event.</p>
+            </div>
+
+            <button
+              className="add-ticket-btn"
+              type="button"
+              onClick={addTicketType}
+            >
+              + Add Ticket
+            </button>
+          </div>
 
           {ticketTypes.map((ticket, index) => (
-            <div key={index}>
-              <h4>Ticket Type {index + 1}</h4>
+            <div className="ticket-form-card" key={index}>
+              <div className="ticket-card-header">
+                <h4>Ticket Type {index + 1}</h4>
 
-              <div>
-                <label>
-                  Ticket Name:
+                {ticketTypes.length > 1 && (
+                  <button
+                    className="remove-ticket-btn"
+                    type="button"
+                    onClick={() => removeTicketType(index)}
+                  >
+                    Remove
+                  </button>
+                )}
+              </div>
+
+              <div className="ticket-input-row">
+                <div className="form-group">
+                  <label>Ticket Name</label>
                   <input
                     type="text"
                     value={ticket.name}
@@ -251,12 +270,10 @@ export default function EventForm({
                     placeholder="General Admission"
                     required
                   />
-                </label>
-              </div>
+                </div>
 
-              <div>
-                <label>
-                  Price:
+                <div className="form-group">
+                  <label>Price</label>
                   <input
                     type="number"
                     value={ticket.price}
@@ -272,12 +289,10 @@ export default function EventForm({
                     placeholder="20.00"
                     required
                   />
-                </label>
-              </div>
+                </div>
 
-              <div>
-                <label>
-                  Quantity:
+                <div className="form-group">
+                  <label>Quantity</label>
                   <input
                     type="number"
                     value={ticket.quantity}
@@ -293,29 +308,16 @@ export default function EventForm({
                     placeholder="100"
                     required
                   />
-                </label>
+                </div>
               </div>
-
-              {ticketTypes.length > 1 && (
-                <button
-                  type="button"
-                  onClick={() => removeTicketType(index)}
-                >
-                  Remove Ticket Type
-                </button>
-              )}
             </div>
           ))}
-
-          <button type="button" onClick={addTicketType}>
-            + Add Ticket Type
-          </button>
         </div>
       )}
 
-      <br />
-
-      <button type="submit">{buttonText}</button>
+      <button className="event-submit-btn" type="submit">
+        {buttonText}
+      </button>
     </form>
   );
 }

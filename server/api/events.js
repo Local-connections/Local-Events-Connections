@@ -352,17 +352,6 @@ router.delete("/:id", getUserFromToken, async (req, res, next) => {
       });
     }
 
-    const {
-      title,
-      description,
-      event_date,
-      event_time,
-      location_id,
-      image_url,
-      is_free,
-      ticket_types,
-    } = req.body;
-
     await deleteEvent(id);
 
     res.sendStatus(204);

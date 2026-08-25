@@ -67,11 +67,11 @@ export default function ManageEvent() {
       navigate("/my-events");
     } catch (error) {
         const message =
-        error.response?.data?.error || "Failed to reschedule event.";
+        error.response?.data?.error || "Failed to delete event.";
 
         alert(message);
 
-        console.error("Failed to reschedule event:", error);
+        console.error("Failed to delete event:", error);
     }
   }
 
@@ -84,46 +84,74 @@ export default function ManageEvent() {
   }
 
   return (
-    <div>
-      <h2>Manage Event</h2>
+    <div className="manage-event-page">
+      <div className="manage-event-container">
+        <div className="manage-event-header">
+          <h2>Manage Event</h2>
+          <p>{event.title}</p>
+        </div>
 
-      <h3>{event.title}</h3>
+        <div className="manage-card">
+          <h3>Edit Event</h3>
+          <p>Update the event details, location, or ticket information.</p>
 
-      <Link to={`/events/${id}/edit`}>
-        <button>Edit Event</button>
-      </Link>
+          <Link to={`/events/${id}/edit`}>
+            <button className="manage-edit-btn">
+              Edit Event
+            </button>
+          </Link>
+        </div>
 
-      <h3>Reschedule Event</h3>
+        <div className="manage-card">
+          <h3>Reschedule Event</h3>
+          <p>Change the event date and time.</p>
 
-      <form onSubmit={handleReschedule}>
-        <label>
-          New Date:
-          <input
-            type="date"
-            value={newDate}
-            onChange={(e) => setNewDate(e.target.value)}
-            required
-          />
-        </label>
+          <form
+            className="reschedule-form"
+            onSubmit={handleReschedule}
+          >
+            <div className="reschedule-row">
+              <label>
+                New Date
+                <input
+                  type="date"
+                  value={newDate}
+                  onChange={(e) => setNewDate(e.target.value)}
+                  required
+                />
+              </label>
 
-        <label>
-          New Time:
-          <input
-            type="time"
-            value={newTime}
-            onChange={(e) => setNewTime(e.target.value)}
-            required
-          />
-        </label>
+              <label>
+                New Time
+                <input
+                  type="time"
+                  value={newTime}
+                  onChange={(e) => setNewTime(e.target.value)}
+                  required
+                />
+              </label>
+            </div>
 
-        <button type="submit">Reschedule Event</button>
-      </form>
+            <button className="manage-reschedule-btn" type="submit">
+              Reschedule Event
+            </button>
+          </form>
+        </div>
 
-      <h3>Delete Event</h3>
+        <div className="manage-card delete-card">
+          <h3>Delete Event</h3>
+          <p>
+            Permanently delete this event. This action cannot be undone.
+          </p>
 
-      <button onClick={handleDelete}>
-        Delete Event
-      </button>
+          <button
+            className="manage-delete-btn"
+            onClick={handleDelete}
+          >
+            Delete Event
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
