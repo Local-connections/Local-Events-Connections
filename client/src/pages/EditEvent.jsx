@@ -66,8 +66,8 @@ export default function EditEvent() {
   }
 
   return (
-    <div>
-      <h2>Edit Event</h2>
+    <div className="event-page">
+      <h1>Edit Event</h1>
 
       <EventForm
         onSubmit={handleUpdateEvent}

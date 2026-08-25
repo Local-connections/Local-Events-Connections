@@ -34,8 +34,8 @@ export default function CreateEvent() {
   }
 
   return (
-    <div>
-      <h2>Create Event</h2>
+    <div className="event-page">
+      <h1>Create Event</h1>
 
       <EventForm onSubmit={handleCreateEvent} />
     </div>
