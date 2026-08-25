@@ -160,7 +160,7 @@ a {
 }
 
 .navbarImage {
-  height: 6rem;
+  height: 8rem;
   border-radius: 60px;
   padding: 0.25rem;
   border: 2px solid #6666663b;
@@ -170,9 +170,15 @@ a {
 }
 
 .brandName {
-  font-size: 1.25rem;
+  font-size: 2.5rem;
   font-weight: 600;
   letter-spacing: -0.5px;
+  text-align: center;
+  margin: 0;
+}
+
+.branchName h5 h1{
+  margin: 0;
 }
 
 /*navbar links*/

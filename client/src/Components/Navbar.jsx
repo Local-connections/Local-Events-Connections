@@ -12,8 +12,9 @@ export default function Navbar() {
         src={logo}
         // src = "../assets/events.jpg"
       />
-      <span className="brandName"><h1>Town</h1></span>
+      <span className="brandName"><h1>Town</h1><h5>Events</h5></span>
       </div>
+      
       <nav id="navlinks">
         <NavLink className="links" to="/">
           Home
