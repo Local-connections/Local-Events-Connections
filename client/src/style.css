@@ -151,6 +151,7 @@ a {
   background-color: white;
   padding-left: 1rem;
   padding-right: 1rem;
+  border-radius: 12px;
 }
 
 .brand {
@@ -177,7 +178,7 @@ a {
   margin: 0;
 }
 
-.branchName h5 h1{
+.branchName h5 h1 {
   margin: 0;
 }
 
@@ -285,9 +286,10 @@ a {
 
 .eventImage {
   width: 100%;
-  max-height: 400px;
+  max-height: 200px;
   object-fit: cover;
   border-radius: 8px;
+  display: block;
 }
 
 .event-details section h1 {
@@ -310,9 +312,10 @@ a {
 
 /* Purchase Form */
 .purchase-form {
-  margin-top: 2rem;
-  border-top: 1px solid #ddd;
+  /* border-top: 1px solid #ddd; */
   padding-top: 1.5rem;
+  margin: 0 auto;
+  padding-left: 20px;
 }
 
 .purchase-form h3 {
@@ -798,10 +801,7 @@ a {
   padding: 0;
 }
 
-.event-form
-  .event-type-section
-  .event-type-choice
-  input[type="radio"] {
+.event-form .event-type-section .event-type-choice input[type="radio"] {
   width: 16px;
   height: 16px;
   min-width: 16px;
@@ -990,7 +990,7 @@ a {
   border: none;
   border-radius: 15px;
   cursor: pointer;
-  font-size: 2rem;  
+  font-size: 2rem;
 }
 
 .my-events-page > a > button:hover {
@@ -1002,7 +1002,7 @@ a {
   display: inline-block;
   margin-top: 1rem;
   padding: 0.5rem 1.25rem;
-  background: #424242;   /* green for manage */
+  background: #424242; /* green for manage */
   color: #fff;
   font-size: 1.25rem;
   border: none;
@@ -1029,4 +1029,24 @@ a {
   margin-bottom: 1rem;
   letter-spacing: -0.5px;
   font-family: cursive;
+}
+
+.event {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.eventSection {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  padding: 20px 20px 20px 20px;
+  line-height: 1.6;
 }

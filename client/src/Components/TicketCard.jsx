@@ -19,7 +19,10 @@ export default function TicketCard({ ticket, onPurchaseSuccess, isPastEvent }) {
       return;
     }
     if (!isLoggedIn) {
-      setMessage({ type: "error", text: "You must be logged in to buy tickets." });
+      setMessage({
+        type: "error",
+        text: "You must be logged in to buy tickets.",
+      });
       return;
     }
 
@@ -84,15 +87,15 @@ export default function TicketCard({ ticket, onPurchaseSuccess, isPastEvent }) {
         {isPastEvent
           ? "Event Passed"
           : !isLoggedIn
-          ? "Log in to buy"
-          : loading
-          ? "Processing…"
-          : ticket.quantity === 0
-          ? "Sold Out"
-          : "Buy"}
+            ? "Log in to buy"
+            : loading
+              ? "Processing…"
+              : ticket.quantity === 0
+                ? "Sold Out"
+                : "Buy"}
       </button>
 
-        {!isLoggedIn && (
+      {!isLoggedIn && (
         <p className="message error">
           Please <Link to="/login">log in</Link> to purchase tickets.
         </p>
