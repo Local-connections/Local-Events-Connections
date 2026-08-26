@@ -59,14 +59,7 @@ export default function EventDetails() {
 
   return (
     <div className="event">
-      <figure>
-        <img
-          className="eventImage"
-          src={event.image_url || defaultImage}
-          alt={event.title}
-        />
-      </figure>
-      <section>
+      <section className="eventSection">
         <h1>{event.title}</h1>
         <p>Hosted at the {event.location_name}</p>
         <p>
@@ -108,6 +101,11 @@ export default function EventDetails() {
         <p className={event.is_free ? "free-event" : "paid-event"}>
           {event.is_free ? "Free Event" : "Paid Event"}
         </p>
+        <img
+          className="eventImage"
+          src={event.image_url || defaultImage}
+          alt={event.title}
+        />
       </section>
 
       <PurchaseForm
