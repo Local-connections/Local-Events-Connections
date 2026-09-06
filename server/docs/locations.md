@@ -8,13 +8,13 @@ Provides endpoints for retrieving and creating event locations.
 
 | Method | Route  | Auth | Description           |
 | ------ | ------ | ---- | --------------------- |
-| GET    | `/`    | No   | Get all locations     |
-| GET    | `/:id` | No   | Get a location by ID  |
-| POST   | `/`    | Yes  | Create a new location |
+| GET    | `/locations/`    | No   | Get all locations     |
+| GET    | `/locations/:id` | No   | Get a location by ID  |
+| POST   | `/locations/`    | Yes  | Create a new location |
 
 ---
 
-## GET `/`
+## GET `/locations/`
 
 Returns all locations.
 
@@ -35,7 +35,7 @@ Returns all locations.
 
 ---
 
-## GET `/:id`
+## GET `/locations/:id`
 
 Returns a location by ID.
 
@@ -57,7 +57,7 @@ Location not found
 
 ---
 
-## POST `/`
+## POST `/locations/`
 
 Creates a new location.
 

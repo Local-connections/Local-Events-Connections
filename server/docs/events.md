@@ -4,20 +4,20 @@ Handles event creation, retrieval, updates, rescheduling, and deletion, includin
 
 ## Endpoints
 
-| Method   | Route                    | Authentication | Description                                |
-| -------- | ------------------------ | -------------- | ------------------------------------------ |
-| `GET`    | `/`                      | No             | Returns all events                         |
-| `POST`   | `/`                      | Yes            | Creates a new event                        |
-| `GET`    | `/:eventId/ticket-types` | No             | Returns ticket types for an event          |
-| `GET`    | `/my`                    | Yes            | Returns events created by the current user |
-| `PUT`    | `/:id/reschedule`        | Yes            | Reschedules an event                       |
-| `PUT`    | `/:id`                   | Yes            | Updates an event                           |
-| `DELETE` | `/:id`                   | Yes            | Deletes an event                           |
-| `GET`    | `/:id`                   | No             | Returns a specific event                   |
+| Method   | Route                           | Authentication | Description                                |
+| -------- | ------------------------------- | -------------- | ------------------------------------------ |
+| `GET`    | `/events/`                      | No             | Returns all events                         |
+| `POST`   | `/events/`                      | Yes            | Creates a new event                        |
+| `GET`    | `/events/:eventId/ticket-types` | No             | Returns ticket types for an event          |
+| `GET`    | `/events/my`                    | Yes            | Returns events created by the current user |
+| `PUT`    | `/events/:id/reschedule`        | Yes            | Reschedules an event                       |
+| `PUT`    | `/events/:id`                   | Yes            | Updates an event                           |
+| `DELETE` | `/events/:id`                   | Yes            | Deletes an event                           |
+| `GET`    | `/events/:id`                   | No             | Returns a specific event                   |
 
 ---
 
-## GET /
+## GET /events/
 
 Returns all events ordered by event date and time.
 
@@ -49,7 +49,7 @@ Returns an array of events containing event information, location information, a
 
 ---
 
-## POST /
+## POST /events/
 
 Creates a new event for the authenticated user.
 
@@ -72,7 +72,7 @@ Requires a valid JWT.
   "ticket_types": [
     {
       "name": "General Admission",
-      "price": 10.00,
+      "price": 10.0,
       "quantity": 100
     }
   ]
@@ -109,7 +109,7 @@ Returns the newly created event, including the supplied categories and ticket ty
 
 ---
 
-## GET /:eventId/ticket-types
+## GET /events/:eventId/ticket-types
 
 Returns the ticket types associated with an event.
 
@@ -128,7 +128,7 @@ Returns the ticket types associated with an event.
   {
     "id": 1,
     "name": "General Admission",
-    "price": 10.00,
+    "price": 10.0,
     "quantity": 100
   }
 ]
@@ -146,7 +146,7 @@ Returned when the event does not exist.
 
 ---
 
-## GET /my
+## GET /events/my
 
 Returns events created by the currently authenticated user.
 
@@ -172,7 +172,7 @@ Returns an array of events belonging to the authenticated user.
 
 ---
 
-## PUT /:id/reschedule
+## PUT /events/:id/reschedule
 
 Changes the date and time of an event.
 
@@ -199,9 +199,9 @@ Both `event_date` and `event_time` are required.
 
 ### Restrictions
 
-* The event must exist.
-* The authenticated user must be the event organizer.
-* The event cannot be rescheduled within 24 hours of its scheduled start time.
+- The event must exist.
+- The authenticated user must be the event organizer.
+- The event cannot be rescheduled within 24 hours of its scheduled start time.
 
 The previous date and time are stored in `previous_event_date` and `previous_event_time`, and `is_rescheduled` is set to `true`.
 
@@ -222,7 +222,7 @@ Returns the updated event.
 
 ---
 
-## PUT /:id
+## PUT /events/:id
 
 Updates an existing event.
 
@@ -253,12 +253,12 @@ Fields are optional. Fields not provided retain their current values.
     {
       "id": 1,
       "name": "General Admission",
-      "price": 15.00,
+      "price": 15.0,
       "quantity": 100
     },
     {
       "name": "VIP",
-      "price": 30.00,
+      "price": 30.0,
       "quantity": 25
     }
   ]
@@ -269,9 +269,9 @@ Existing ticket types can be updated by providing their `id`. A new ticket type 
 
 ### Restrictions
 
-* The event must exist.
-* The authenticated user must be the event organizer.
-* The event cannot be updated within 24 hours of its scheduled start time.
+- The event must exist.
+- The authenticated user must be the event organizer.
+- The event cannot be updated within 24 hours of its scheduled start time.
 
 ### Response
 
@@ -290,7 +290,7 @@ Returns the updated event.
 
 ---
 
-## DELETE /:id
+## DELETE /events/:id
 
 Deletes an event.
 
@@ -306,9 +306,9 @@ Requires a valid JWT. Only the event organizer can delete the event.
 
 ### Restrictions
 
-* The event must exist.
-* The authenticated user must be the event organizer.
-* The event cannot be deleted within 24 hours of its scheduled start time.
+- The event must exist.
+- The authenticated user must be the event organizer.
+- The event cannot be deleted within 24 hours of its scheduled start time.
 
 ### Response
 
@@ -327,7 +327,7 @@ The event was successfully deleted.
 
 ---
 
-## GET /:id
+## GET /events/:id
 
 Returns a specific event by ID.
 

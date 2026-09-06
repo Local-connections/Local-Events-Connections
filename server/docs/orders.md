@@ -8,14 +8,14 @@ Provides endpoints for purchasing tickets and managing the authenticated user's 
 
 | Method | Route  | Auth | Description           |
 | ------ | ------ | ---- | --------------------- |
-| POST   | `/`    | Yes  | Purchase tickets      |
-| GET    | `/`    | Yes  | Get the user's orders |
-| GET    | `/:id` | Yes  | Get an order by ID    |
-| PUT    | `/:id` | Yes  | Update an order       |
+| POST   | `/orders/`    | Yes  | Purchase tickets      |
+| GET    | `/orders/`    | Yes  | Get the user's orders |
+| GET    | `/orders/:id` | Yes  | Get an order by ID    |
+| PUT    | `/orders/:id` | Yes  | Update an order       |
 
 ---
 
-## POST `/`
+## POST `/orders/`
 
 Purchases tickets for an event.
 
@@ -61,7 +61,7 @@ Returns the created order.
 
 ---
 
-## GET `/`
+## GET `/orders/`
 
 Returns all orders belonging to the authenticated user.
 
@@ -73,7 +73,7 @@ Returns an array of orders containing event and ticket information.
 
 ---
 
-## GET `/:id`
+## GET `/orders/:id`
 
 Returns a specific order belonging to the authenticated user.
 
@@ -98,7 +98,7 @@ Returns the order with event, ticket type, and location information.
 
 ---
 
-## PUT `/:id`
+## PUT `/orders/:id`
 
 Updates an order belonging to the authenticated user.
 

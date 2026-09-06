@@ -8,11 +8,11 @@ Provides event categories for use when browsing and filtering events.
 
 | Method | Route | Auth | Description              |
 | ------ | ----- | ---- | ------------------------ |
-| GET    | `/`   | No   | Get all event categories |
+| GET    | `/categories/`   | No   | Get all event categories |
 
 ---
 
-## GET `/`
+## GET `/categories/`
 
 Returns all event categories, ordered alphabetically by name.
 

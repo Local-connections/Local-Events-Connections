@@ -6,13 +6,13 @@ Handles user registration, login, and access to the currently authenticated user
 
 | Method | Route       | Authentication | Description                              |
 | ------ | ----------- | -------------- | ---------------------------------------- |
-| `POST` | `/register` | No             | Creates a new user account               |
-| `POST` | `/login`    | No             | Authenticates a user and returns a JWT   |
-| `GET`  | `/me`       | Yes            | Returns the currently authenticated user |
+| `POST` | `user/register` | No             | Creates a new user account               |
+| `POST` | `user/login`    | No             | Authenticates a user and returns a JWT   |
+| `GET`  | `user/me`       | Yes            | Returns the currently authenticated user |
 
 ---
 
-## POST /register
+## POST /user/register
 
 Creates a new user account.
 
@@ -46,7 +46,7 @@ Returns a JWT containing the new user's ID.
 
 ---
 
-## POST /login
+## POST /user/login
 
 Authenticates an existing user.
 
@@ -86,7 +86,7 @@ Invalid email/password.
 
 ---
 
-## GET /me
+## GET /user/me
 
 Returns the currently authenticated user's information.
 
