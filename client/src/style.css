@@ -141,6 +141,10 @@ a {
 }
 
 #navbar {
+    position: sticky;
+  top: 0;
+  z-index: 100;
+  background: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1059,14 +1063,22 @@ a {
 /* ============================================
    STICKY FOOTER LAYOUT
    ============================================ */
-.layout {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  background: #f8f9fa;
+  border-top: 1px solid #e0e0e0;
+  color: #495057;
+  font-size: 0.85rem;
 }
 
+/* Prevent content from being hidden behind the fixed footer */
 .layout-main {
-  flex: 1;
+  padding-bottom: 120px; /* adjust to footer height */
 }
 
 /* ============================================
