@@ -12,12 +12,14 @@ import EditEvent from "./pages/EditEvent";
 import MyOrders from "./pages/MyTickets";
 import MyEvents from "./pages/MyEvents";
 import ManageEvent from "./pages/ManageEvent";
+import About from "./pages/About";
 
 function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
         <Route path="/events/:id" element={<Event />} />
         <Route path="/register" element={<Register />} />
         <Route path="/account" element={<Profile />} />
