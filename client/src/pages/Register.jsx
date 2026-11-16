@@ -17,7 +17,8 @@ const Register = () => {
 
     try {
       await register(userData);
-      navigate("/");
+      navigate("/login", { state: { message: "Registration successful! Please log in." },
+      replace: true });
     } catch (error) {
       console.error("Registration failed:", error);
     }
