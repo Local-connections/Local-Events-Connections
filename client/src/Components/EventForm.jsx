@@ -1,10 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getCategories } from "../api/events";
 
 export default function EventForm({
   onSubmit,
   initialData = {},
   buttonText = "Create Event",
 }) {
+  const [categoriesList, setCategoriesList] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState(
+  initialData.category_ids || []
+    );
+  
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const data = await getCategories();
+        setCategoriesList(data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    }
+
+    fetchCategories();
+  }, []);
+
+  function handleCategoryChange(categoryId) {
+    setSelectedCategories((previous) =>
+      previous.includes(categoryId)
+        ? previous.filter((id) => id !== categoryId)
+        : [...previous, categoryId]
+    );
+}
+
   const [isFree, setIsFree] = useState(initialData.is_free ?? null);
 
   const [ticketTypes, setTicketTypes] = useState(
@@ -57,6 +84,7 @@ export default function EventForm({
       event_time: formData.get("event_time"),
       image_url: formData.get("image_url") || null,
       is_free: isFree,
+      category_ids: selectedCategories,
     };
 
     if (isFree === false) {
@@ -101,6 +129,25 @@ export default function EventForm({
           required
         />
       </div>
+
+      <div className="form-group">
+  <label>Event Categories</label>
+
+    <div className="category-options">
+      {categoriesList.map((category) => (
+        <label key={category.id} className="category-choice">
+          <input
+            type="checkbox"
+            value={category.id}
+            checked={selectedCategories.includes(category.id)}
+            onChange={() => handleCategoryChange(category.id)}
+          />
+
+          <span>{category.name}</span>
+        </label>
+      ))}
+    </div>
+  </div>
 
       <div className="form-row">
         <div className="form-group">
