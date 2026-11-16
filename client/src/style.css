@@ -583,6 +583,15 @@ a {
   border-radius: 8px;
   font-size: 15px;
 }
+const eventData = {
+  title: formData.get("title"),
+  description: formData.get("description"),
+  event_date: formData.get("event_date"),
+  event_time: formData.get("event_time"),
+  image_url: formData.get("image_url") || null,
+  is_free: isFree,
+  category_ids: selectedCategories,
+};
 
 .event-form textarea {
   min-height: 110px;
@@ -603,6 +612,28 @@ a {
   gap: 8px;
   width: auto;
   margin: 0;
+}
+
+.category-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.category-choice {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.category-choice input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  accent-color: #2563eb;
+  flex-shrink: 0;
 }
 
 .event-form .event-type-choice input[type="radio"] {
