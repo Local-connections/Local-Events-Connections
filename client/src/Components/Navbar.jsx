@@ -1,11 +1,30 @@
 import { NavLink } from "react-router";
 import { useAuth } from "../context/AuthContext";
 import logo from "../assets/inTownLogo.png";
+import { useEffect, useRef, useState } from "react";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
+  const [hidden, setHidden] = useState(false);
+  const lastY = useRef(0);
+
+  // Hide while scrolling down, reveal while scrolling up (and at the very top).
+  useEffect(() => {
+    function onScroll() {
+      const y = window.scrollY;
+      if (y < 10 || y < lastY.current) {
+        setHidden(false);
+      } else if (y > lastY.current) {
+        setHidden(true);
+      }
+      lastY.current = y;
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header id="navbar">
+    <header id="navbar" className={hidden ? "navbar-hidden" : ""}>
       <div className="brand">
       <img
         className="navbarImage"
