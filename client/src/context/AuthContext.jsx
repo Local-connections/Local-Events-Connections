@@ -41,10 +41,8 @@ export function AuthProvider({ children }) {
   }, []);
 
   async function register(userData) {
-    const token = await registerUser(userData);
-    localStorage.setItem("token", token);
-    const me2 = await getMe();
-    setUser(me2);
+    // Registering only creates the account; the user must log in afterwards.
+    await registerUser(userData);
   }
 
   async function login(userData) {

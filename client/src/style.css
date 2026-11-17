@@ -158,6 +158,11 @@ a {
   padding-left: 1rem;
   padding-right: 1rem;
   border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+#navbar.navbar-hidden {
+  transform: translateY(-120%);
 }
 
 .brand {
@@ -1103,23 +1108,6 @@ const eventData = {
 /* ============================================
    STICKY FOOTER LAYOUT
    ============================================ */
-.footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  padding: 0.75rem 1rem;
-  background: #f8f9fa;
-  border-top: 1px solid #e0e0e0;
-  color: #495057;
-  font-size: 0.85rem;
-}
-
-/* Prevent content from being hidden behind the fixed footer */
-.layout-main {
-  padding-bottom: 120px; /* adjust to footer height */
-}
 
 /* ============================================
    FOOTER
