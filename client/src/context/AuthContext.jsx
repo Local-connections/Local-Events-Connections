@@ -49,7 +49,7 @@ export function AuthProvider({ children }) {
     const token = await loginUser(userData);
     localStorage.setItem("token", token);
     const me = await getMe();
-    setUser(me);
+    setUser({ ...me, token });
   }
 
   const logout = async () => {
